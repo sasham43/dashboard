@@ -1,3 +1,80 @@
 body{
   background-color: tomato;
 }
+
+.main{
+  border: solid 1px #fff;
+  height: 748px;
+  margin: 10px 0 10px 0;
+}
+
+/*Buttons*/
+.hideButton{
+  position: absolute;
+  top: 0;
+  left: -34px;
+}
+
+.settingsButton{
+  position: absolute;
+  top: 0;
+  right: -34px;
+}
+
+.homeButton{
+  position: absolute;
+  top: 0;
+  right: -34px;
+}
+
+/*Widgets*/
+
+.time{
+  background-color: orchid;
+  height: 143px;
+}
+
+.calendar{
+  background-color: cornflowerblue;
+  height: 297px;
+}
+
+.weather{
+  background-color: blueviolet;
+  height: 440px;
+}
+
+.transit{
+  background-color: chartreuse;
+  height: 440px;
+}
+
+.news{
+  background-color: #333;
+  height: 277px;
+}
+
+/*Forms*/
+
+form{
+  margin: 5px 0 5px 0;
+}
+
+.styleForm{
+  background-color: orchid;
+  height: 240px;
+}
+
+.locationForm{
+  background-color: cornflowerblue;
+  height: 240px;
+}
+
+.transitForm{
+  background-color: chartreuse;
+  height: 240px;
+}
+
+#topRow{
+    margin: 5px 0 0 0;
+}

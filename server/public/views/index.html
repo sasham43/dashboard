@@ -12,12 +12,16 @@
     <!-- Custom -->
     <script src="assets/scripts/client.min.js"></script>
     <link rel="stylesheet" href="assets/styles/style.css" />
-    
+
+    <base href="/" />
+
   </head>
-  <body ng-controller="HomeController">
-    <h1>Header</h1>
-    <p>
-      Text.
-    </p>
+  <body class="container" ng-controller="HomeController">
+    <div class="background">
+    </div>
+    <div class="main col-sm-12 col-md-12">
+      <div ng-view></div>
+
+    </div>
   </body>
 </html>

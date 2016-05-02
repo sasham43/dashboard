@@ -26,10 +26,16 @@ module.exports = function(grunt) {
                cwd: "node_modules/",
                src: [
                    "angular/angular.min.js",
+                   "angular/angular.min.js.map",
                    "angular/angular-csp.css",
                    "angular-route/angular-route.min.js",
+                   "angular-route/angular-route.min.js.map",
                    "bootstrap/dist/css/bootstrap.min.css",
-                   "bootstrap/dist/js/bootstrap.min.js"
+                   "bootstrap/dist/css/bootstrap.min.css.map",
+                   "bootstrap/dist/js/bootstrap.min.js",
+                   "bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+                   "bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+                   "bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
                ],
                "dest": "server/public/vendor/"
            }
@@ -42,5 +48,5 @@ module.exports = function(grunt) {
 
    // Default task(s).
    grunt.registerTask('default', ['copy', 'uglify']);
-
+   grunt.registerTask('start-watch', ['uglify', 'watch']);
 };
