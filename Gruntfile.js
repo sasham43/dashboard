@@ -35,7 +35,8 @@ module.exports = function(grunt) {
                    "bootstrap/dist/js/bootstrap.min.js",
                    "bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
                    "bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
-                   "bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
+                   "bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+                   "moment/min/moment.min.js"
                ],
                "dest": "server/public/vendor/"
            }

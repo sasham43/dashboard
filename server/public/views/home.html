@@ -8,11 +8,11 @@
       </p>
     </div>
     <div class="calendar" ng-click="hc.logEvents()">
-      <div ng-repeat="event in hc.eventList">
+      <div ng-repeat="event in hc.eventList | orderBy: 'start'">
         <p class="eventTitle">
           {{event.title}}
         </p>
-        <p>
+        <p class="eventTimes">
           {{event.start}} - {{event.end}}
         </p>
       </div>

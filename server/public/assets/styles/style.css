@@ -27,7 +27,7 @@ body{
   right: -34px;
 }
 
-/*Widgets*/
+/*Widget Structure*/
 
 .time{
   background-color: orchid;
@@ -37,6 +37,8 @@ body{
 .calendar{
   background-color: cornflowerblue;
   height: 297px;
+  overflow: scroll;
+  padding: 10px;
 }
 
 .weather{
@@ -77,4 +79,16 @@ form{
 
 #topRow{
     margin: 5px 0 0 0;
+}
+
+/*Calendar*/
+
+.eventTitle{
+  font-size: 18px;
+  text-align: right;
+  border-bottom: solid 1px #333;
+}
+
+.eventTimes{
+  font-size: 14px;
 }

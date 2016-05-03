@@ -19,6 +19,7 @@ app.controller('HomeController', ['CalendarService',function(CalendarService){
   console.log('home controller loaded');
   var hc = this;
   hc.eventList = CalendarService.events;
+  hc.displayEvents = [];
 
   CalendarService.getCalendarEvents();
 }]);
@@ -33,8 +34,14 @@ app.factory('CalendarService', ['$http', function($http){
   var getCalendarEvents = function(){
     $http.get('/calendar').then(function(response){
       console.log('client side calendar response:', response);
-      //events = response;
-      angular.copy(response.data, events);
+      var tempEvents = [];
+      // loop through eventList and format times
+      response.data.map(function(event){
+        var tempStart = moment(event.start).format('HH:mm');
+        var tempEnd = moment(event.end).format('HH:mm');
+        tempEvents.push({title: event.title, start: tempStart, end: tempEnd});
+      });
+      angular.copy(tempEvents, events);
     });
   }
 
