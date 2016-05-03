@@ -4,6 +4,7 @@ var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var mongoose = require('mongoose');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // custom modules
@@ -29,6 +30,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// cors ???
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
 // authentication strategy for google calendar
 app.use(express.static('server/public'));
 passport.use(new GoogleStrategy({
@@ -42,6 +50,18 @@ passport.use(new GoogleStrategy({
    return done(null, profile);
   }
 ));
+
+// database
+var mongoURI = 'mongodb://localhost/dashboard';
+var mongoDB = mongoose.connect(mongoURI).connection;
+
+mongoDB.on('error', function(err){
+  console.log('Error connecting to database:', err);
+});
+
+mongoDB.once('open', function(){
+  console.log('Connected to database.');
+});
 
 
 // routes

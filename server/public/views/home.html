@@ -7,24 +7,15 @@
         10:00 a.m.
       </p>
     </div>
-    <div class="calendar">
-      <ul>
-        <li>
-          Event
-        </li>
-        <li>
-          Event
-        </li>
-        <li>
-          Event
-        </li>
-        <li>
-          Event
-        </li>
-        <li>
-          Event
-        </li>
-      </ul>
+    <div class="calendar" ng-click="hc.logEvents()">
+      <div ng-repeat="event in hc.eventList">
+        <p class="eventTitle">
+          {{event.title}}
+        </p>
+        <p>
+          {{event.start}} - {{event.end}}
+        </p>
+      </div>
     </div>
   </div>
 
