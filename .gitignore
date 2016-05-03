@@ -1,2 +1,6 @@
 node_modules
 .DS_Store
+modules/client_secret.json
+dashboard_private_key.json
+server/routes/calendar-old.js
+modules/googleCalendar.js
