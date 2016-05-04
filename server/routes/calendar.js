@@ -19,7 +19,8 @@ router.get('/', function(req, res){
       return;
     }
 
-    // Make an authorized request to list Drive files.
+    // Make an authorized request to list google calendar
+    // -------> should think about grabbing the next 10 events so the display is never empty
     calendar.events.list({ auth: jwtClient, calendarId: 'sashasemail@gmail.com', timeMin: today, timeMax: tomorrow }, function(err, response) {
       // handle err and response
       if (err){
@@ -28,21 +29,13 @@ router.get('/', function(req, res){
         console.log('Retrieved events from Google.');
         var events = response.items;
         var trimmedEvents = [];
-        // loop through and store items in database
+        // loop through and pick off the properties we want
         events.map(function(event){
           var title = event.summary;
           var start = event.start.dateTime;
           var end = event.end.dateTime;
           var trimmedEvent = {title: title, start: start, end: end};
           trimmedEvents.push(trimmedEvent);
-          // Event.create(trimmedEvent, function(err){
-          //   if (err){
-          //     console.log('Error saving event:', err);
-          //   } else {
-          //     console.log('Event saved successfully.');
-          //   }
-          // });
-
         });
         res.send(trimmedEvents);
       }

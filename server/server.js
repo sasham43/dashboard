@@ -33,6 +33,7 @@ mongoDB.once('open', function(){
 
 // routes
 app.use('/calendar', calendar);
+app.use('/weather', weather);
 app.use('/', index);
 
 

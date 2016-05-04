@@ -15,13 +15,22 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   $locationProvider.html5Mode(true);
 }]);
 
-app.controller('HomeController', ['CalendarService',function(CalendarService){
+app.controller('HomeController', ['WeatherService', 'CalendarService', '$http', function(WeatherService,CalendarService, $http){
   console.log('home controller loaded');
   var hc = this;
+  hc.umbrellaURL = 'assets/images/attire/umbrella-light.png';
+  hc.shortsURL = 'assets/images/attire/shorts-light.png';
+  hc.pantsURL = 'assets/images/attire/pants-light.png';
+  hc.jacketURL = 'assets/images/attire/jacket-light.png';
+  hc.mittensURL = 'assets/images/attire/mitten-light.png';
+  hc.tshirtURL = 'assets/images/attire/tshirt-light.png';
   hc.eventList = CalendarService.events;
-  hc.displayEvents = [];
+  hc.conditions = WeatherService.conditions;
+  hc.hourly = WeatherService.hourly;
 
   CalendarService.getCalendarEvents();
+  WeatherService.getWeather();
+
 }]);
 
 app.controller('SettingsController', ['$http', function($http){
@@ -48,5 +57,24 @@ app.factory('CalendarService', ['$http', function($http){
   return {
     events: events,
     getCalendarEvents: getCalendarEvents
+  }
+}]);
+
+app.factory('WeatherService', ['$http', function($http){
+  var hourly = [];
+  var conditions = {};
+
+  var getWeather = function(){
+    $http.get('/weather').then(function(response){
+      console.log('client side weather response:', response);
+      angular.copy(response.data.conditionObject, conditions);
+      angular.copy(response.data.hourlyList, hourly);
+    });
+  }
+
+  return {
+    hourly: hourly,
+    conditions: conditions,
+    getWeather: getWeather
   }
 }]);

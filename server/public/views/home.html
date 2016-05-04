@@ -22,6 +22,56 @@
   <div class="col-sm-4">
     <div class="weather">
 
+      <div class="row currentConditions">
+        <div class="col-sm-6">
+          <img class="conditionIcon" ng-src="{{hc.conditions.iconURL}}" />
+        </div>
+        <div class="col-sm-6">
+          <p class="currentTemp">
+            {{hc.conditions.temp}}
+          </p>
+          <p class="highLow">
+            {{hc.conditions.high}} | {{hc.conditions.low}}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="hourlyForecast">
+            <li class="oneHour" ng-repeat="oneHour in hc.hourly">
+              <img class="hourlyIcon" ng-src="{{oneHour.iconURL}}" />
+              <span class="hourlyTemp">
+                {{oneHour.temperature}}
+              </span><br />
+              <span>
+                {{oneHour.time}}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <h4 class="attireTitle">Attire</h4>
+        <div class="col-sm-6 text-center">
+          <img ng-src='{{hc.umbrellaURL}}' ng-show="hc.conditions.umbrella" />
+        </div>
+        <div class="col-sm-6 text-center">
+          <img ng-src='{{hc.tshirtURL}}' ng-show="hc.conditions.tshirt" />
+          <img ng-src='{{hc.jacketURL}}' ng-show="hc.conditions.jacket" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-center">
+          <img ng-src='{{hc.mittensURL}}' ng-show="hc.conditions.mittens" />
+        </div>
+        <div class="col-sm-6 text-center">
+          <img ng-src='{{hc.shortsURL}}' ng-show="hc.conditions.shorts" />
+          <img ng-src='{{hc.pantsURL}}' ng-show="hc.conditions.pants" />
+        </div>
+      </div>
+
     </div>
   </div>
   <div class="col-sm-4">

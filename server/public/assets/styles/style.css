@@ -44,6 +44,7 @@ body{
 .weather{
   background-color: blueviolet;
   height: 440px;
+  padding: 5px;
 }
 
 .transit{
@@ -91,4 +92,55 @@ form{
 
 .eventTimes{
   font-size: 14px;
+}
+
+/*Weather*/
+
+.currentConditions{
+  margin: 25px 0;
+}
+
+.currentTemp{
+  font-size: 60px;
+  text-align: right;
+  display: inline;
+}
+
+.highLow{
+  text-align: right;
+  margin-right: 30px;
+}
+
+.hourlyForecast{
+  overflow-x: scroll;
+  overflow-y:visible;
+  /*overflow: auto;*/
+  white-space: nowrap;
+  height: 60px;
+  padding: 0 15px;
+}
+
+.oneHour{
+  width: 50px;
+  display: inline-block;
+  list-style-type: none;
+  margin-right: 15px;
+}
+
+.hourlyTemp{
+  margin-left: 17px;
+}
+
+.conditionIcon{
+  width: 100px;
+}
+
+.hourlyIcon{
+  width: 16px;
+  height: 15px;
+}
+
+.attireTitle{
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
