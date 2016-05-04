@@ -18,12 +18,19 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 app.controller('HomeController', ['WeatherService', 'CalendarService', '$http', function(WeatherService,CalendarService, $http){
   console.log('home controller loaded');
   var hc = this;
+
+  // time
+  hc.time = moment().format('hh:mm A');
+
+  // attire icons
   hc.umbrellaURL = 'assets/images/attire/umbrella-light.png';
   hc.shortsURL = 'assets/images/attire/shorts-light.png';
   hc.pantsURL = 'assets/images/attire/pants-light.png';
   hc.jacketURL = 'assets/images/attire/jacket-light.png';
   hc.mittensURL = 'assets/images/attire/mitten-light.png';
   hc.tshirtURL = 'assets/images/attire/tshirt-light.png';
+
+  // get data from factories
   hc.eventList = CalendarService.events;
   hc.conditions = WeatherService.conditions;
   hc.hourly = WeatherService.hourly;

@@ -144,3 +144,11 @@ form{
   margin-left: 20px;
   margin-bottom: 20px;
 }
+
+/*Time */
+
+.timeText{
+  display: inline-block;
+  font-size: 60px;
+  margin-top: 25px;
+}

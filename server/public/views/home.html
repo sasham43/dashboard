@@ -2,9 +2,9 @@
 <button class="btn btn-round settingsButton" aria-label="Settings"><a href="/settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></button>
 <div id="topRow" class="row">
   <div class="timeCal col-sm-4">
-    <div class="time">
-      <p>
-        10:00 a.m.
+    <div class="time text-center">
+      <p class="timeText">
+        {{hc.time}}
       </p>
     </div>
     <div class="calendar" ng-click="hc.logEvents()">
