@@ -14,13 +14,13 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
-    <form class="locationForm">
-      <input class="form-control" type="text" placeholder="address" />
-      <input class="form-control" type="text" placeholder="city" />
-      <input class="form-control" type="text" placeholder="state" />
-      <input class="form-control" type="text" placeholder="zip" />
-      <input class="form-inline" type="checkbox" id="weatherCheckbox" /><label for="weatherCheckbox">Use For Weather</label>
-      <input class="form-inline" type="checkbox" id="transitCheckbox" /><label for="transitCheckbox">Use For Transit</label>
+    <form class="locationForm" ng-submit="sc.setLocation()">
+      <input class="form-control" type="text" placeholder="address" ng-model="sc.location.address"/>
+      <input class="form-control" type="text" placeholder="city" ng-model="sc.location.city"/>
+      <input class="form-control" type="text" placeholder="state" ng-model="sc.location.state"/>
+      <input class="form-control" type="text" placeholder="zip" ng-model="sc.location.zip"/>
+      <input class="form-inline" type="checkbox" id="weatherCheckbox" ng-model="sc.location.weather"/><label for="weatherCheckbox">Use For Weather</label>
+      <input class="form-inline" type="checkbox" id="transitCheckbox" ng-model="sc.location.transit"/><label for="transitCheckbox">Use For Transit</label>
       <button type="submit" class="btn btn-success form-control">Save</button>
       <button class="btn btn-danger form-control">Cancel</button>
     </form>

@@ -35,8 +35,8 @@ router.get('/', function(req, res){
           // current conditions
           conditionObject.temp = jsBody.current_observation.feelslike_f;
           conditionObject.conditions = jsBody.current_observation.weather;
-          conditionObject.windSpeed = jsBody.current_observation.wind_mph; // "wind_mph"
-          conditionObject.precipToday = jsBody.current_observation.precip_today_in;// "precip_today_in"
+          conditionObject.windSpeed = jsBody.current_observation.wind_mph; // not currently using this
+          conditionObject.precipToday = jsBody.current_observation.precip_today_in;
 
           // astronomy - sunrise & sunset
           conditionObject.sunrise = Number(jsBody.sun_phase.sunrise.hour);

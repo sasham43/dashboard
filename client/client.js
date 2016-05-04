@@ -9,7 +9,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     })
     .when('/settings', {
       templateUrl: '/views/settings.html',
-      controller: 'SettingsController'
+      controller: 'SettingsController',
+      controllerAs: 'sc'
     });
 
   $locationProvider.html5Mode(true);
@@ -40,8 +41,17 @@ app.controller('HomeController', ['WeatherService', 'CalendarService', '$http', 
 
 }]);
 
-app.controller('SettingsController', ['$http', function($http){
+app.controller('SettingsController', ['LocationService', function(LocationService){
   console.log('settings controller loaded');
+  var sc = this;
+
+  // location
+  sc.location = {};
+  sc.setLocation = function(){
+    LocationService.setLocation(sc.location.address, sc.location.city, sc.location.state, sc.location.zip, sc.location.weather, sc.location.transit);
+  }
+
+
 }]);
 
 app.factory('CalendarService', ['$http', function($http){
@@ -84,4 +94,25 @@ app.factory('WeatherService', ['$http', function($http){
     conditions: conditions,
     getWeather: getWeather
   }
+}]);
+
+app.factory('LocationService', ['$http', function($http){
+
+  var locationResponseStatus = 0;
+  var setLocation = function(address, city, state, zip, weather, transit){
+    var location = {address: address, city: city, state: state, zip: zip, weather: weather, transit: transit};
+    $http.post('/location', location).then(function(response){
+      console.log('location posted successfully');
+      locationResponseStatus = response.status;
+    });
+  }
+
+  return {
+    setLocation: setLocation,
+    locationResponseStatus: locationResponseStatus
+  }
+}]);
+
+app.factory('TransitService', ['$http', function($http){
+
 }]);

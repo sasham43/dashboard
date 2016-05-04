@@ -70,6 +70,9 @@ function assignIconURL(dayOrNight, condition){
       case 'Cloudy':
         iconURL += 'simple_weather_icon_04.png';
         break;
+      case 'Overcast':
+        iconURL += 'simple_weather_icon_04.png';
+        break;
       case 'Flurries':
         iconURL += 'simple_weather_icon_24.png';
         break;
@@ -116,6 +119,9 @@ function assignIconURL(dayOrNight, condition){
         iconURL += 'simple_weather_icon_01.png';
         break;
       case 'Cloudy':
+        iconURL += 'simple_weather_icon_04.png';
+        break;
+      case 'Overcast':
         iconURL += 'simple_weather_icon_04.png';
         break;
       case 'Flurries':

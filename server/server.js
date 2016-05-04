@@ -11,6 +11,7 @@ var nyt = require('./routes/nyt');
 var apod = require('./routes/apod');
 var weather = require('./routes/weather');
 var transit = require('./routes/transit');
+var location = require('./routes/location');
 
 var app = express();
 
@@ -34,6 +35,7 @@ mongoDB.once('open', function(){
 // routes
 app.use('/calendar', calendar);
 app.use('/weather', weather);
+app.use('/location', location);
 app.use('/', index);
 
 
