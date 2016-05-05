@@ -36,6 +36,7 @@ mongoDB.once('open', function(){
 app.use('/calendar', calendar);
 app.use('/weather', weather);
 app.use('/location', location);
+app.use('/transit', transit);
 app.use('/', index);
 
 

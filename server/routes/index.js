@@ -9,6 +9,7 @@ router.get('/', function(req, res){
 });
 
 router.get('/*', function(req, res){
+  console.log('/* wildcard matched, serving default route.');
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
 });
 

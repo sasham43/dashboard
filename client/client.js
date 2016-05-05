@@ -16,6 +16,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   $locationProvider.html5Mode(true);
 }]);
 
+/////////////////////////////////////////////
+//    Home Controller
+/////////////////////////////////////////////
+
 app.controller('HomeController', ['WeatherService', 'CalendarService', '$http', function(WeatherService,CalendarService, $http){
   console.log('home controller loaded');
   var hc = this;
@@ -41,9 +45,25 @@ app.controller('HomeController', ['WeatherService', 'CalendarService', '$http', 
 
 }]);
 
-app.controller('SettingsController', ['LocationService', function(LocationService){
+/////////////////////////////////////////////
+//    Settings Controller
+/////////////////////////////////////////////
+
+app.controller('SettingsController', ['LocationService', 'TransitService', function(LocationService, TransitService){
   console.log('settings controller loaded');
   var sc = this;
+  sc.selectedRoute = {};
+  sc.selectedDirection = '';
+  sc.routes = TransitService.routes;
+  sc.cardinalDirections = TransitService.cardinalDirections;
+  sc.stops = TransitService.stops;
+  //sc.showRouteSelector = TransitService.showRouteSelector;
+
+  sc.logDirections = function(){
+    console.log('sc.cardinalDirections:', sc.cardinalDirections);
+    console.log('sc.cardinalDirections.eastWest:', sc.cardinalDirections.eastWest);
+    console.log('sc.cardinalDirections.northSouth:', sc.cardinalDirections.northSouth);
+  }
 
   // location
   sc.location = {};
@@ -51,8 +71,78 @@ app.controller('SettingsController', ['LocationService', function(LocationServic
     LocationService.setLocation(sc.location.address, sc.location.city, sc.location.state, sc.location.zip, sc.location.weather, sc.location.transit);
   }
 
+  // transit
+  sc.getRoutes = function(){
+    TransitService.getRoutes();
+  };
 
+  sc.getDirection = function(){
+    TransitService.getDirection(sc.selectedRoute);
+  }
+
+  sc.getStops = function(){
+    TransitService.getStops(sc.selectedRoute, sc.selectedDirection);
+  }
 }]);
+
+/////////////////////////////////////////////
+//    Transit Service
+/////////////////////////////////////////////
+
+app.factory('TransitService', ['$http', function($http){
+  var routes = [];
+  var northSouth = false;
+  var eastWest = false;
+  var cardinalDirections = {};
+  var stops = [];
+
+  var getRoutes = function(){
+    $http.get('/transit/routes').then(function(response){
+      console.log('Got routes:', response);
+      angular.copy(response.data, routes);
+    });
+  };
+
+  var getDirection = function(routeID){
+    console.log('Getting directions for:', routeID);
+    $http.get('/transit/direction/' + routeID.Route).then(function(response){
+      console.log('Got directions:', response.data);
+      var responseData = response.data;
+      if (responseData === 'northSouth'){
+        northSouth = true;
+        eastWest = false;
+      } else {
+        eastWest = true;
+        northSouth = false;
+      }
+
+      angular.copy({eastWest: eastWest, northSouth: northSouth}, cardinalDirections);
+      console.log('cardinalDirections', cardinalDirections);
+    });
+  };
+
+  var getStops = function(routeID, directionID){
+    console.log('Getting stops for:', routeID, directionID);
+    $http.get('/transit/stops/' + routeID.Route + '/' + directionID).then(function(response){
+      console.log('Got stops:', response.data);
+      angular.copy(response.data, stops);
+    });
+  };
+
+
+  return {
+    getRoutes: getRoutes,
+    routes: routes,
+    getDirection: getDirection,
+    cardinalDirections: cardinalDirections,
+    getStops: getStops,
+    stops: stops
+  }
+}]);
+
+/////////////////////////////////////////////
+//    Calendar Service
+/////////////////////////////////////////////
 
 app.factory('CalendarService', ['$http', function($http){
   var events = [];
@@ -77,6 +167,10 @@ app.factory('CalendarService', ['$http', function($http){
   }
 }]);
 
+/////////////////////////////////////////////
+//    Weather Service
+/////////////////////////////////////////////
+
 app.factory('WeatherService', ['$http', function($http){
   var hourly = [];
   var conditions = {};
@@ -96,6 +190,10 @@ app.factory('WeatherService', ['$http', function($http){
   }
 }]);
 
+/////////////////////////////////////////////
+//    Location Service
+/////////////////////////////////////////////
+
 app.factory('LocationService', ['$http', function($http){
 
   var locationResponseStatus = 0;
@@ -111,8 +209,4 @@ app.factory('LocationService', ['$http', function($http){
     setLocation: setLocation,
     locationResponseStatus: locationResponseStatus
   }
-}]);
-
-app.factory('TransitService', ['$http', function($http){
-
 }]);
