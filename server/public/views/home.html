@@ -31,7 +31,7 @@
             {{hc.conditions.temp}}
           </p>
           <p class="highLow">
-            {{hc.conditions.high}} | {{hc.conditions.low}}
+            {{hc.conditions.low}} | {{hc.conditions.high}}
           </p>
         </div>
       </div>
@@ -75,8 +75,34 @@
     </div>
   </div>
   <div class="col-sm-4">
-    <div class="transit">
+    <div class="transit" ng-click="hc.logTransit()">
+      <select class="form-control" ng-show="hc.stops.length != 0" ng-options="stop.name for stop in hc.stops" ng-init="hc.stops[0]" ng-model="hc.selectedDepartureStop" ng-change="hc.getDepartureInfo()"></select>
+      <div class="row">
+        <div class="col-sm-6">
+          <p>
+            Your bus will arrive at {{hc.selectedDepartureStop.name}} in:
+          </p>
+        </div>
+        <div class="col-sm-6">
+          {{hc.departures[0].departureText}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" ng-click="hc.logMaps()">
+          You should leave to catch it in:
+        </div>
+        <div class="col-sm-6">
 
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            <ui-gmap-google-map class="angular-google-map-container" center='hc.map.center' zoom='hc.map.zoom'>
+              <ui-gmap-markers coords="'self'" models="hc.markers">
+              </ui-gmap-markers>
+            </ui-gmap-google-map>
+        </div>
+      </div>
     </div>
   </div>
 </div>

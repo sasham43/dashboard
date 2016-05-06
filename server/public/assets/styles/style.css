@@ -152,3 +152,10 @@ form{
   font-size: 60px;
   margin-top: 25px;
 }
+
+/*Google Maps*/
+.angular-google-map-container {
+  height: 300px;
+  width: 272px;
+  position: relative;
+}

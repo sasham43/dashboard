@@ -44,8 +44,18 @@ router.post('/', function(req, res){
       }
     }
   });
+});
 
-
+router.get('/', function(req, res){
+  Location.find({}, function(err, locations){
+    if (err){
+      console.log('Error getting location:', err);
+      res.sendStatus(500);
+    } else {
+      console.log('Got locations:', locations);
+      res.send(locations[0]);
+    }
+  });
 });
 
 module.exports = router;

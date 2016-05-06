@@ -39,10 +39,11 @@
 
       <select class="form-control" ng-options="stop.Text for stop in sc.stops" ng-model="sc.selectedStop" ng-show="sc.stops.length != 0"></select>
       <button class="btn btn-info">Edit Bus Stop</button>
-      <select><option>Default Value</option></select>
-      {{sc.selectedStop}}
-      <button type="submit" class="btn btn-success form-control">Save</button>
+      <span ng-show="sc.createStopResponse.value == 200">Stop Saved!</span>
+      <span ng-show="sc.createStopResponse.value == 500">Stop Not Saved!</span>
+      <button type="submit" class="btn btn-success form-control" ng-click="sc.createStop()">Save</button>
       <button class="btn btn-danger form-control">Cancel</button>
+
     </form>
   </div>
 </div>
