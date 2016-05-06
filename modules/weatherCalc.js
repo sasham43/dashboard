@@ -7,7 +7,7 @@ function assignAttire(conditionObject){
   conditionObject.tshirt = false;
 
   // umbrella
-  if(conditionObject.precipToday > 1){
+  if(conditionObject.precipToday > 0.1){
     conditionObject.umbrella = true;
   }
 

@@ -134,4 +134,18 @@ router.get('/departure/:routeID/:directionID/:stopID', function(req, res){
   });
 });
 
+router.delete('/remove/:id', function(req, res){
+  var id = req.params.id;
+  console.log('Trying to remove stop with this id:', id);
+  Stop.findOneAndRemove({_id: id}, function(err, stop){
+    if (err){
+      console.log('Error removing bus stop:', err);
+      res.sendStatus(500);
+    } else {
+      console.log('Removed this stop:', stop);
+      res.sendStatus(200);
+    }
+  });
+});
+
 module.exports = router;

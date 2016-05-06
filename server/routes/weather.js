@@ -46,7 +46,8 @@ router.get('/', function(req, res){
 
           // hourly forecast
           var tempArray = []; // for finding high and low
-          jsBody.hourly_forecast.map(function(hour){
+          var dayArray = jsBody.hourly_forecast.slice(0, 24); // limit array to a 24-hour period
+          dayArray.map(function(hour){
             var tempTime = hour.FCTTIME.civil;
             var tempCondition = hour.condition;
             var tempTemperature = hour.feelslike.english;

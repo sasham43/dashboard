@@ -9,6 +9,7 @@ body{
 }
 
 /*Buttons*/
+
 .hideButton{
   position: absolute;
   top: 0;
@@ -74,7 +75,6 @@ form{
 }
 
 .transitForm{
-  background-color: chartreuse;
   height: 240px;
 }
 
@@ -92,6 +92,10 @@ form{
 
 .eventTimes{
   font-size: 14px;
+}
+
+.startDate{
+  float: right;
 }
 
 /*Weather*/
@@ -124,7 +128,7 @@ form{
   width: 50px;
   display: inline-block;
   list-style-type: none;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 
 .hourlyTemp{
@@ -136,7 +140,7 @@ form{
 }
 
 .hourlyIcon{
-  width: 18px;
+  width: 25px;
   /*height: 15px;*/
 }
 
@@ -153,9 +157,26 @@ form{
   margin-top: 25px;
 }
 
-/*Google Maps*/
-.angular-google-map-container {
-  height: 300px;
-  width: 272px;
-  position: relative;
+/*Transit*/
+
+.busArrival{
+  margin-top: 15px;
+}
+
+/*Location*/
+
+.locationSettings{
+  background-color: cornflowerblue;
+}
+
+.currentLocation{
+  font-size: 25px;
+}
+
+
+.styleSettings{
+  background-color: orchid;
+}
+.transitSettings{
+  background-color: chartreuse;
 }

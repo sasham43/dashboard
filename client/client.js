@@ -51,7 +51,6 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
 
   hc.getDepartureInfo = function(){
     TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop.direction, hc.selectedDepartureStop.value);
-    hc.updateMap();
   };
 
   hc.logMaps = function(){
@@ -63,8 +62,6 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
   WeatherService.getWeather();
   TransitService.getAllSavedStops();
   LocationService.getLocation();
-
-  hc.updateMap();
 
 }]);
 
@@ -82,11 +79,17 @@ app.controller('SettingsController', ['LocationService', 'TransitService', funct
   sc.stops = TransitService.stops;
   sc.createStopResponse = TransitService.createStopResponse;
 
+  // edit bus stops
+  sc.editStops = TransitService.savedStops;
+  sc.selectedDepartureStop = {};
+
+  sc.currentLocation = LocationService.location;
+
   // location
   sc.location = {};
   sc.setLocation = function(){
     LocationService.setLocation(sc.location.address, sc.location.city, sc.location.state, sc.location.zip, sc.location.weather, sc.location.transit);
-  }
+  };
 
   // transit
   sc.getRoutes = function(){
@@ -95,15 +98,25 @@ app.controller('SettingsController', ['LocationService', 'TransitService', funct
 
   sc.getDirection = function(){
     TransitService.getDirection(sc.selectedRoute);
-  }
+  };
 
   sc.getStops = function(){
     TransitService.getStops(sc.selectedRoute, sc.selectedDirection);
-  }
+  };
 
   sc.createStop = function(){
     TransitService.createStop(sc.selectedStop, sc.selectedRoute, sc.selectedDirection);
+  };
+
+  sc.editBusStops = function(){
+    TransitService.getAllSavedStops();
+  };
+
+  sc.removeBusStop = function(){
+    TransitService.removeBusStop(sc.selectedDepartureStop);
   }
+
+  LocationService.getLocation();
 }]);
 
 /////////////////////////////////////////////
@@ -120,7 +133,7 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
   var savedStops = [];
   var departures = [];
   var busMarkerPosition = {};
-  var busIcon = '/assets/images/transit/tiny_bus_icon.png';
+  var busMarkerIcon = '/assets/images/transit/tiny_bus_icon.png';
 
   // save bus stop
 
@@ -172,6 +185,7 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
   var getAllSavedStops = function(){
     $http.get('/transit/all').then(function(response){
       console.log('Retrieved stops from database:', response);
+      // console.log('Factory stops:', savedStops);
       angular.copy(response.data, savedStops);
     });
   };
@@ -187,9 +201,18 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
         busMarkerPosition.lat = departures[0].lat;
         busMarkerPosition.lng = departures[0].lng;
         console.log('busMarkerPosition', busMarkerPosition);
-        var busMarker = new google.maps.Marker({position: busMarkerPosition});
+        var busMarker = new google.maps.Marker({position: busMarkerPosition, icon: busMarkerIcon}); // should add train icon logic too
         busMarker.setMap(map);
       });
+    });
+  };
+
+  // edit stops
+
+  var removeBusStop = function(stop){
+    $http.delete('/transit/remove/' + stop._id).then(function(response){
+      console.log('Removed bus stop');
+      getAllSavedStops();
     });
   };
 
@@ -205,7 +228,8 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
     getAllSavedStops: getAllSavedStops,
     savedStops: savedStops,
     getDepartureInfo: getDepartureInfo,
-    departures: departures
+    departures: departures,
+    removeBusStop: removeBusStop
   }
 }]);
 
@@ -222,9 +246,19 @@ app.factory('CalendarService', ['$http', function($http){
       var tempEvents = [];
       // loop through eventList and format times
       response.data.map(function(event){
-        var tempStart = moment(event.start).format('HH:mm');
-        var tempEnd = moment(event.end).format('HH:mm');
-        tempEvents.push({title: event.title, start: tempStart, end: tempEnd});
+        var today = moment();
+        var dateStart = moment(event.start);
+        var tempStart = moment(event.start).format('ddd MMM D');
+        var tempEnd = moment(event.end);
+        var tempTimeStart = moment(event.start).format('HH:mm');
+        var tempTimeEnd = moment(event.end).format('HH:mm');
+        var isToday = false;
+        if(today.dayOfYear() === moment(event.start).dayOfYear()){
+          isToday = true;
+        } else {
+          isToday = false;
+        }
+        tempEvents.push({title: event.title, dateStart: dateStart, start: tempStart, end: tempEnd, timeStart: tempTimeStart, timeEnd: tempTimeEnd, isToday: isToday});
       });
       angular.copy(tempEvents, events);
     });
@@ -276,6 +310,7 @@ app.factory('LocationService', ['NgMap', '$http', function(NgMap, $http){
     $http.post('/location', location).then(function(response){
       console.log('location posted successfully');
       locationResponseStatus = response.status;
+      getLocation();
     });
   };
 

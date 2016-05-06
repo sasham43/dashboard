@@ -21,7 +21,7 @@ router.get('/', function(req, res){
 
     // Make an authorized request to list google calendar
     // -------> should think about grabbing the next 10 events so the display is never empty
-    calendar.events.list({ auth: jwtClient, calendarId: 'sashasemail@gmail.com', timeMin: today, timeMax: tomorrow }, function(err, response) {
+    calendar.events.list({ auth: jwtClient, calendarId: 'sashasemail@gmail.com', timeMin: today, maxResults: 10}, function(err, response) {
       // handle err and response
       if (err){
         console.log('Error getting events new style:', err);

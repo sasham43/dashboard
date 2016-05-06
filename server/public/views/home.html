@@ -8,12 +8,12 @@
       </p>
     </div>
     <div class="calendar" ng-click="hc.logEvents()">
-      <div ng-repeat="event in hc.eventList | orderBy: 'start'">
+      <div ng-repeat="event in hc.eventList | orderBy: 'dateStart'">
         <p class="eventTitle">
           {{event.title}}
         </p>
         <p class="eventTimes">
-          {{event.start}} - {{event.end}}
+        <span class="startEnd">{{event.timeStart}} - {{event.timeEnd}}</span>  <span class="startDate" ng-show="!event.isToday">{{event.start}}</span>
         </p>
       </div>
     </div>
@@ -76,10 +76,10 @@
   </div>
   <div class="col-sm-4">
     <div class="transit" ng-click="hc.logTransit()">
-      <select class="form-control" ng-show="hc.stops.length != 0" ng-options="stop.name for stop in hc.stops" ng-init="hc.stops[0]" ng-model="hc.selectedDepartureStop" ng-change="hc.getDepartureInfo()"></select>
-      <div class="row">
+      <select class="form-control" ng-show="hc.stops.length != 0" ng-options="stop.name for stop in hc.stops" ng-model="hc.selectedDepartureStop" ng-change="hc.getDepartureInfo()"><option value="">Select A Bus Stop</option></select>
+      <div class="row busArrival">
         <div class="col-sm-6">
-          <p>
+          <p class="">
             Your bus will arrive at {{hc.selectedDepartureStop.name}} in:
           </p>
         </div>
