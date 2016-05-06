@@ -19,10 +19,10 @@
     <base href="/" />
 
   </head>
-  <body class="container" >
+  <body class="container" ng-controller="IndexController as ic" ng-style="ic.selectedStyle">
     <div class="background">
     </div>
-    <div class="main col-sm-12 col-md-12">
+    <div class="main col-sm-12 col-md-12" >
       <div ng-view></div>
 
     </div>

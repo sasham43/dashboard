@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var index = require('./routes/index');
 var calendar = require('./routes/calendar');
 var nyt = require('./routes/nyt');
-var apod = require('./routes/apod');
+var style = require('./routes/style');
 var weather = require('./routes/weather');
 var transit = require('./routes/transit');
 var location = require('./routes/location');
@@ -37,6 +37,7 @@ app.use('/calendar', calendar);
 app.use('/weather', weather);
 app.use('/location', location);
 app.use('/transit', transit);
+app.use('/style', style);
 app.use('/', index);
 
 

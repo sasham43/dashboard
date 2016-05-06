@@ -4,11 +4,11 @@
 <div class="row">
   <div class="col-sm-12 styleSettings">
     <form class="styleForm">
-      <input class="form-control" type="text" placeholder="border color"/>
-      <input class="form-control" type="text" placeholder="text color"/>
-      <input class="form-control" type="text" placeholder="background color"/>
-      <input class="form-inline" type="checkbox" id="apodCheckbox" /><label for="apodCheckbox">Use Astronomy Picture of the Day</label>
-      <button type="submit" class="btn btn-success form-control">Save</button>
+      <input class="form-control" type="text" placeholder="border color" ng-model="sc.selectedStyle.borderColor"/>
+      <input class="form-control" type="text" placeholder="text color" ng-model="sc.selectedStyle.color"/>
+      <input class="form-control" type="text" placeholder="background color" ng-model="sc.selectedStyle.background"/>
+      <input class="form-inline" type="checkbox" id="apodCheckbox" ng-model="sc.selectedStyle.useAPOD"/><label for="apodCheckbox">Use Astronomy Picture of the Day</label>
+      <button type="submit" class="btn btn-success form-control" ng-click="sc.saveStyles()">Save</button>
       <button class="btn btn-danger form-control">Cancel</button>
     </form>
   </div>
@@ -55,8 +55,8 @@
         <select class="form-control" ng-options="stop.Text for stop in sc.stops" ng-model="sc.selectedStop" ng-show="sc.stops.length != 0"></select>
         <span ng-show="sc.createStopResponse.value == 200">Stop Saved!</span>
         <span ng-show="sc.createStopResponse.value == 500">Stop Not Saved!</span>
-        <button type="submit" class="btn btn-success form-control" ng-click="sc.createStop()">Save</button>
-        <button class="btn btn-danger form-control">Cancel</button>
+        <button id="createStop" type="submit" class="btn btn-success form-control" ng-click="sc.createStop()">Save</button>
+        <button id="cancelCreateStop" class="btn btn-danger form-control">Cancel</button>
 
       </form>
     </div>
@@ -64,9 +64,9 @@
       <form class="editTransitForm">
         <button class="btn btn-info" ng-click="sc.editBusStops()">Edit Bus Stop</button>
         <select class="form-control" ng-show="sc.editStops.length != 0" ng-options="stop.name for stop in sc.editStops" ng-model="sc.selectedDepartureStop" ng-change=""><option value="">Select A Bus Stop</option></select>
-        <button class="btn btn-warning" ng-click="sc.removeBusStop()">Remove Stop</button>
-        <button type="submit" class="btn btn-success form-control" ng-click="sc.updateStop()">Save</button>
-        <button class="btn btn-danger form-control">Cancel</button>
+        <button id="removeStop" class="btn btn-warning form-control" ng-click="sc.removeBusStop()">Remove Stop</button>
+        <button id="updateStop" type="submit" class="btn btn-success form-control" ng-click="sc.updateStop()">Save</button>
+        <button id="cancelUpdateStop" class="btn btn-danger form-control">Cancel</button>
       </form>
     </div>
   </div>

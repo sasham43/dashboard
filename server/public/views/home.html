@@ -9,7 +9,7 @@
     </div>
     <div class="calendar" ng-click="hc.logEvents()">
       <div ng-repeat="event in hc.eventList | orderBy: 'dateStart'">
-        <p class="eventTitle">
+        <p class="eventTitle" ng-style="{'border-color': ic.selectedStyle.borderColor}">
           {{event.title}}
         </p>
         <p class="eventTimes">

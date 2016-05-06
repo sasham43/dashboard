@@ -17,6 +17,18 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 }]);
 
 /////////////////////////////////////////////
+//    Index Controller
+/////////////////////////////////////////////
+
+app.controller('IndexController', ['StyleService', function(StyleService){
+  var ic = this;
+
+  ic.selectedStyle = StyleService.savedStyles;
+
+  StyleService.getStyles();
+}]);
+
+/////////////////////////////////////////////
 //    Home Controller
 /////////////////////////////////////////////
 
@@ -69,9 +81,11 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
 //    Settings Controller
 /////////////////////////////////////////////
 
-app.controller('SettingsController', ['LocationService', 'TransitService', function(LocationService, TransitService){
+app.controller('SettingsController', ['StyleService', 'LocationService', 'TransitService', function(StyleService, LocationService, TransitService){
   console.log('settings controller loaded');
   var sc = this;
+
+  // add bus stops
   sc.selectedRoute = {};
   sc.selectedDirection = '';
   sc.routes = TransitService.routes;
@@ -83,10 +97,15 @@ app.controller('SettingsController', ['LocationService', 'TransitService', funct
   sc.editStops = TransitService.savedStops;
   sc.selectedDepartureStop = {};
 
-  sc.currentLocation = LocationService.location;
+  // styles
+  sc.selectedStyle = {};
 
   // location
+  sc.currentLocation = LocationService.location;
   sc.location = {};
+
+
+  // location
   sc.setLocation = function(){
     LocationService.setLocation(sc.location.address, sc.location.city, sc.location.state, sc.location.zip, sc.location.weather, sc.location.transit);
   };
@@ -114,6 +133,15 @@ app.controller('SettingsController', ['LocationService', 'TransitService', funct
 
   sc.removeBusStop = function(){
     TransitService.removeBusStop(sc.selectedDepartureStop);
+  }
+
+  // styles
+  sc.saveStyles = function(){
+    StyleService.saveStyles(sc.selectedStyle);
+  };
+
+  sc.getStyles = function(){
+    StyleService.getStyles();
   }
 
   LocationService.getLocation();
@@ -338,5 +366,43 @@ app.factory('LocationService', ['NgMap', '$http', function(NgMap, $http){
     locationResponseStatus: locationResponseStatus,
     getLocation: getLocation,
     location: location
+  }
+}]);
+
+/////////////////////////////////////////////
+//    Style Service (includes Astronomy picture of the day)
+/////////////////////////////////////////////
+
+app.factory('StyleService', ['$http', function($http){
+  var apod = {};
+  var savedStyles = {};
+
+  var getAPOD = function(){
+    $http.get('/style/apod').then(function(response){
+      console.log('Got APOD:', response);
+      angular.copy(response.data, apod);
+    });
+  };
+
+  var saveStyles = function(styles){
+    $http.put('/style/save', styles).then(function(response){
+      console.log('Styles posted successfully.');
+      getStyles();
+    });
+  };
+
+  var getStyles = function(){
+    $http.get('/style/all').then(function(response){
+      console.log('Got styles:', response);
+      angular.copy(response.data, savedStyles);
+    });
+  };
+
+  return {
+    apod: apod,
+    getAPOD: getAPOD,
+    saveStyles: saveStyles,
+    getStyles: getStyles,
+    savedStyles: savedStyles
   }
 }]);

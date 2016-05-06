@@ -31,25 +31,25 @@ body{
 /*Widget Structure*/
 
 .time{
-  background-color: orchid;
+  background-color: rgba(30, 30, 30, 0.5);
   height: 143px;
 }
 
 .calendar{
-  background-color: cornflowerblue;
+  background-color: rgba(30, 30, 30, 0.5);
   height: 297px;
   overflow: scroll;
   padding: 10px;
 }
 
 .weather{
-  background-color: blueviolet;
+  background-color: rgba(30, 30, 30, 0.5);
   height: 440px;
   padding: 5px;
 }
 
 .transit{
-  background-color: chartreuse;
+  background-color: rgba(30, 30, 30, 0.5);
   height: 440px;
 }
 
@@ -65,16 +65,19 @@ form{
 }
 
 .styleForm{
-  background-color: orchid;
+  background-color: rgba(30, 30, 30, 0.5);
   height: 240px;
 }
 
 .locationForm{
-  background-color: cornflowerblue;
   height: 240px;
 }
 
 .transitForm{
+  height: 240px;
+}
+
+.editTransitForm{
   height: 240px;
 }
 
@@ -166,17 +169,51 @@ form{
 /*Location*/
 
 .locationSettings{
-  background-color: cornflowerblue;
+  background-color: rgba(30, 30, 30, 0.5);
 }
 
 .currentLocation{
   font-size: 25px;
 }
 
+/*Style*/
 
 .styleSettings{
-  background-color: orchid;
+  background-color: rgba(30, 30, 30, 0.5);
 }
+
+/*Transit*/
+
 .transitSettings{
-  background-color: chartreuse;
+  background-color: rgba(30, 30, 30, 0.5);
+}
+
+#createStop{
+  position: absolute;
+  left: 0;
+  bottom: 34px;
+}
+
+#cancelCreateStop{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+#removeStop{
+  position: absolute;
+  right: 0;
+  bottom: 68px;
+}
+
+#updateStop{
+  position: absolute;
+  left: 0;
+  bottom: 34px;
+}
+
+#cancelUpdateStop{
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
