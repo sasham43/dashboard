@@ -1,6 +1,6 @@
-var app = angular.module('dashboardApp', ['ngRoute', 'uiGmapgoogle-maps']);
+var app = angular.module('dashboardApp', ['ngRoute', 'ngMap']);
 
-app.config(['$routeProvider', '$locationProvider', 'uiGmapGoogleMapApiProvider', function($routeProvider, $locationProvider, uiGmapGoogleMapApiProvider){
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
   $routeProvider
     .when('/', {
       templateUrl: '/views/home.html',
@@ -14,22 +14,16 @@ app.config(['$routeProvider', '$locationProvider', 'uiGmapGoogleMapApiProvider',
     });
 
   $locationProvider.html5Mode(true);
-
-  uiGmapGoogleMapApiProvider.configure({
-        //    key: 'your api key',
-        v: '3.22', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization, geocoding'
-    });
 }]);
 
 /////////////////////////////////////////////
 //    Home Controller
 /////////////////////////////////////////////
 
-app.controller('HomeController', ['uiGmapIsReady', 'LocationService', 'TransitService', 'WeatherService', 'CalendarService', '$http', function(uiGmapIsReady, LocationService, TransitService, WeatherService, CalendarService, $http){
+app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 'WeatherService', 'CalendarService', '$http', function(NgMap, LocationService, TransitService, WeatherService, CalendarService, $http){
   console.log('home controller loaded');
   var hc = this;
-  hc.gmap = uiGmapIsReady;
+
 
   // location
   hc.location = LocationService.location;
@@ -49,55 +43,19 @@ app.controller('HomeController', ['uiGmapIsReady', 'LocationService', 'TransitSe
   hc.stops = TransitService.savedStops;
   hc.selectedDepartureStop = {};
   hc.departures = TransitService.departures;
-  hc.busMarker = {id:0, coords: {lat: 0, lng: 0}};
-  hc.homeMarker = {id: 1, coords: {lat: 44.96641779999999, lng: -93.28213879999998}};
-  //hc.markers = [hc.busMarker, hc.homeMarker];
-  hc.markers = [{id:0, coords: {lat: 0, lng: 0}}, {id: 1, coords: {lat: 44.96641779999999, lng: -93.28213879999998}} ];
 
   // get data from factories
   hc.eventList = CalendarService.events;
   hc.conditions = WeatherService.conditions;
   hc.hourly = WeatherService.hourly;
-  hc.latLng = LocationService.latLng;
-
-  hc.updateMap = function(){
-    // hc.gmap.then(function(maps){
-    //   LocationService.getLocation();
-    //   hc.map.center = hc.latLng;
-    //   hc.map.zoom = 12;
-    //   if(hc.departures.length != 0){
-    //     hc.departures[0].coords = {lat: hc.departures[0].lat, lng: hc.departures[0].lng};
-    //   }
-    //   console.log('map object', hc.map);
-    //   console.log('hc.latLng object', hc.latLng);
-    // });
-  //   hc.gmap.promise(1).then(function(instances) {
-  //       instances.forEach(function(inst) {
-  //           var map = inst.map;
-  //           var uuid = map.uiGmap_id;
-  //           var mapInstanceNumber = inst.instance; // Starts at 1.
-  //           map.center = hc.latLng;
-  //           map.zoom = 12;
-  //           console.log('Maps are ready:', map, uuid, mapInstanceNumber);
-  //       });
-  //   });
-  // };
-
-  // var thisMap = hc.gmap.getGMap();
-  // console.log('thisMap', thisMap);
 
   hc.getDepartureInfo = function(){
     TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop.direction, hc.selectedDepartureStop.value);
     hc.updateMap();
   };
 
-  // google maps
-  hc.map = { center: { latitude: 45, longitude: -73 }, zoom: 5 };
-
-
-
   hc.logMaps = function(){
-    console.log('latLng:', hc.latLng);
+      //console.log('latLng:', hc.latLng);
     //hc.map.center = hc.latLng;
   }
 
@@ -152,7 +110,7 @@ app.controller('SettingsController', ['LocationService', 'TransitService', funct
 //    Transit Service
 /////////////////////////////////////////////
 
-app.factory('TransitService', ['uiGmapGoogleMapApi', '$http', function(uiGmapGoogleMapApi, $http){
+app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
   var routes = [];
   var northSouth = false;
   var eastWest = false;
@@ -161,6 +119,8 @@ app.factory('TransitService', ['uiGmapGoogleMapApi', '$http', function(uiGmapGoo
   var createStopResponse = {value: 0};
   var savedStops = [];
   var departures = [];
+  var busMarkerPosition = {};
+  var busIcon = '/assets/images/transit/tiny_bus_icon.png';
 
   // save bus stop
 
@@ -183,7 +143,6 @@ app.factory('TransitService', ['uiGmapGoogleMapApi', '$http', function(uiGmapGoo
         eastWest = true;
         northSouth = false;
       }
-
       angular.copy({eastWest: eastWest, northSouth: northSouth}, cardinalDirections);
       console.log('cardinalDirections', cardinalDirections);
     });
@@ -221,22 +180,18 @@ app.factory('TransitService', ['uiGmapGoogleMapApi', '$http', function(uiGmapGoo
     console.log('Getting departure info for:', routeID, directionID, stopID);
     $http.get('/transit/departure/' + routeID + '/' + directionID + '/' + stopID).then(function(response){
       console.log('Got departure info:', response.data);
-      var responseData = response.data;
       angular.copy(response.data, departures);
+
       // google maps
-      // uiGmapGoogleMapApi.then(function(maps){
-      //   var geocoder = new maps.Geocoder();
-      //   var addressString = '28th Ave Station MN';
-      //   geocoder.geocode({address: addressString}, function(results, status){
-      //     console.log('Bus stop geocode results:', results);
-      //     console.log('Bus stop geocode status:', status);
-      //   })
-      // });
+      NgMap.getMap({id: 'map'}).then(function(map){
+        busMarkerPosition.lat = departures[0].lat;
+        busMarkerPosition.lng = departures[0].lng;
+        console.log('busMarkerPosition', busMarkerPosition);
+        var busMarker = new google.maps.Marker({position: busMarkerPosition});
+        busMarker.setMap(map);
+      });
     });
   };
-
-
-
 
   return {
     getRoutes: getRoutes,
@@ -308,10 +263,13 @@ app.factory('WeatherService', ['$http', function($http){
 //    Location Service
 /////////////////////////////////////////////
 
-app.factory('LocationService', ['uiGmapGoogleMapApi', '$http', function(uiGmapGoogleMapApi, $http){
+app.factory('LocationService', ['NgMap', '$http', function(NgMap, $http){
   var locationResponseStatus = 0;
   var location = {};
   var latLng = {};
+  var homeMarkerPosition = {};
+  var homeMarkerIcon = '/assets/images/transit/home.png';
+  var homeMarker = {};
 
   var setLocation = function(address, city, state, zip, weather, transit){
     var location = {address: address, city: city, state: state, zip: zip, weather: weather, transit: transit};
@@ -325,31 +283,25 @@ app.factory('LocationService', ['uiGmapGoogleMapApi', '$http', function(uiGmapGo
     $http.get('/location').then(function(response){
       console.log('Retrieved location:', response);
       angular.copy(response.data, location);
-      // google maps
-      uiGmapGoogleMapApi.then(function(maps) {
-        console.log('factory location:', location);
-        var geocode = new maps.Geocoder();
+
+      NgMap.getMap({id:'map'}).then(function(map){
+        var geocode = new google.maps.Geocoder();
         var addressString = location.address + " " + location.city + " " + location.state + " " + location.zip;
-        console.log('addressString:', addressString);
         geocode.geocode({address: addressString}, function(results, status){
-          //console.log('geocode results:', results);
-          //console.log('geocode status:', status);
-          var latitude = results[0].geometry.location.lat();
-          var longitude = results[0].geometry.location.lng();
-          angular.copy({latitude: latitude, longitude: longitude}, latLng);
+          console.log('results', results);
+          homeMarkerPosition = results[0].geometry.location;
+          map.setCenter(results[0].geometry.location);
+          homeMarker = new google.maps.Marker({position: homeMarkerPosition, icon: homeMarkerIcon});
+          homeMarker.setMap(map);
         });
       });
     });
   };
 
-
-
-
   return {
     setLocation: setLocation,
     locationResponseStatus: locationResponseStatus,
     getLocation: getLocation,
-    location: location,
-    latLng: latLng
+    location: location
   }
 }]);
