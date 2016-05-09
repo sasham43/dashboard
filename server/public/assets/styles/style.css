@@ -7,6 +7,18 @@ body{
   color: inherit;
   background-color: rgba(0,0,0,0);
 }
+#removeStopSelect{
+  color: inherit;
+  background-color: rgba(0,0,0,0);
+}
+#addStopSelect{
+  color: inherit;
+  background-color: rgba(0,0,0,0);
+}
+#addRouteSelect{
+  color: inherit;
+  background-color: rgba(0,0,0,0);
+}
 
 .view{
   border-color: inherit;

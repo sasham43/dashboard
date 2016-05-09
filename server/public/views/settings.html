@@ -57,7 +57,7 @@
     <div class="col-sm-6">
       <form class="transitForm" ng-click="sc.logDirections()">
         <button class="btn btn-info form-control" ng-click="sc.getRoutes()">Add a Bus Stop</button>
-        <select class="form-control" ng-options="route.Description for route in sc.routes" ng-model="sc.selectedRoute" ng-show="sc.routes.length != 0" ng-change="sc.getDirection()"><option value="">Select A Bus Route</option></select>
+        <select id="addRouteSelect" class="form-control" ng-options="route.Description for route in sc.routes" ng-model="sc.selectedRoute" ng-show="sc.routes.length != 0" ng-change="sc.getDirection()"><option value="">Select A Bus Route</option></select>
 
         <div class="radios text-center">
           <label class="form-inline busRadio firstRadio" ng-show="sc.cardinalDirections.northSouth" for="southRadio"><input class="radio" type="radio" ng-change="sc.getStops()" ng-value="1" id="southRadio" ng-model="sc.selectedDirection"/>South</label>
@@ -67,7 +67,7 @@
         </div>
 
 
-        <select class="form-control" ng-options="stop.Text for stop in sc.stops" ng-model="sc.selectedStop" ng-show="sc.stops.length != 0"><option value="">Select A Bus Stop</option></select>
+        <select id="addStopSelect" class="form-control" ng-options="stop.Text for stop in sc.stops" ng-model="sc.selectedStop" ng-show="sc.stops.length != 0"><option value="">Select A Bus Stop</option></select>
         <span ng-show="sc.createStopResponse.value == 200">Stop Saved!</span>
         <span ng-show="sc.createStopResponse.value == 500">Stop Not Saved!</span>
         <button ng-show="sc.selectedStop" id="createStop" type="submit" class="btn btn-success form-control" ng-click="sc.createStop()">Save</button>
@@ -78,7 +78,7 @@
     <div class="col-sm-6">
       <form class="editTransitForm">
         <button class="btn btn-info form-control" ng-click="sc.editBusStops()">Edit Bus Stop</button>
-        <select class="form-control" ng-show="sc.editStops.length != 0" ng-options="stop.name for stop in sc.editStops" ng-model="sc.selectedDepartureStop" ng-change=""><option value="">Select A Bus Stop</option></select>
+        <select id="removeStopSelect" class="form-control" ng-show="sc.editStops.length != 0" ng-options="stop.name for stop in sc.editStops" ng-model="sc.selectedDepartureStop" ng-change=""><option value="">Select A Bus Stop</option></select>
         <button id="removeStop" class="btn btn-warning form-control" ng-show="sc.editStops.length != 0" ng-click="sc.removeBusStop()">Remove Stop</button>
 
       </form>
