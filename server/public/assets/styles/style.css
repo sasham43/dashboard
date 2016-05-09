@@ -3,6 +3,11 @@ body{
   background-size: cover;
 }
 
+#stopSelect{
+  color: inherit;
+  background-color: rgba(0,0,0,0);
+}
+
 .view{
   border-color: inherit;
 }
@@ -21,6 +26,7 @@ body{
   height: 748px;
   margin: 10px 0 10px 0;
   border-color: inherit;
+  border-radius: 4px;
   /*transition: 1s ease-in-out all;*/
 }
 
@@ -28,20 +34,30 @@ body{
 
 .hideButton{
   position: absolute;
+  background-color: rgba(30, 30, 30, 0.5);
+  border: solid 1px;
   top: 0;
-  left: -34px;
+  left: -40px;
 }
 
 .settingsButton{
   position: absolute;
+  background-color: rgba(30, 30, 30, 0.5);
+  border: solid 1px;
   top: 0;
-  right: -34px;
+  right: -40px;
 }
 
 .homeButton{
   position: absolute;
+  background-color: rgba(30, 30, 30, 0.5);
+  border: solid 1px;
   top: 0;
-  right: -34px;
+  right: -40px;
+}
+
+.routeLink{
+  color:inherit;
 }
 
 /*Widget Structure*/
@@ -179,7 +195,22 @@ form{
 /*Transit*/
 
 .busArrival{
-  margin-top: 15px;
+  margin: 15px 0 0 0;
+  padding: 0 10px;
+}
+
+.arrivalTime{
+  font-size: 20px;
+}
+
+.mapContainer{
+  height: 300px;
+}
+
+#map{
+  position: absolute;
+  width: 271px;
+  bottom: 0;
 }
 
 /*Location*/

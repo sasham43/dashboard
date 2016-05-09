@@ -50,6 +50,11 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
   console.log('home controller loaded');
   var hc = this;
 
+  // routing
+  // hc.routeSettings = function(){
+  //   $location.path('/views/#/settings.html');
+  // };
+
 
   // location
   hc.location = LocationService.location;
@@ -69,6 +74,7 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
   hc.stops = TransitService.savedStops;
   hc.selectedDepartureStop = {};
   hc.departures = TransitService.departures;
+  hc.arrivalText = TransitService.arrivalText;
 
   // get data from factories
   hc.eventList = CalendarService.events;
@@ -82,6 +88,7 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
   };
 
   hc.showDepartureInfo = function(){
+  // console.log('arrivalText', hc.arrivalText);
     if(hc.selectedDepartureStop === null || hc.selectedDepartureStop.value === undefined){
       hc.departureInfoClass="fadedOut";
       return false;
@@ -196,6 +203,7 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
   var departures = [];
   var busMarkerPosition = {};
   var busMarkerIcon = '/assets/images/transit/tiny_bus_icon.png';
+  var arrivalText = '';
 
   // save bus stop
 
@@ -258,6 +266,18 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
       console.log('Got departure info:', response.data);
       angular.copy(response.data, departures);
 
+      if(departures[0].departureText.includes('Min')){
+        console.log('min true');
+        departures[0].arrivalText = 'Your bus will arrive at your selected stop in:';
+      } else if (departures[0].departureText.includes(':')){
+        console.log(': true');
+        departures[0].arrivalText = 'Your bus will arrive at your selected stop at:';
+      } else if (departures[0].departureText.includes('Due')){
+        departures[0].arrivalText = 'Your bus will be arriving shortly.';
+        departures[0].departureText = '';
+      }
+      console.log('departures[0]:', departures[0]);
+
       // google maps
       NgMap.getMap({id: 'map'}).then(function(map){
         busMarkerPosition.lat = departures[0].lat;
@@ -280,7 +300,7 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
 
   var clearCardinalDirections = function(){
     angular.copy({eastWest: false, northSouth: false}, cardinalDirections);
-    console.log(cardinalDirections);
+    //console.log(cardinalDirections);
   }
 
   return {
@@ -297,7 +317,8 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
     getDepartureInfo: getDepartureInfo,
     departures: departures,
     removeBusStop: removeBusStop,
-    clearCardinalDirections: clearCardinalDirections
+    clearCardinalDirections: clearCardinalDirections,
+    arrivalText: arrivalText
   }
 }]);
 

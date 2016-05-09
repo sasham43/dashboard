@@ -1,5 +1,5 @@
-<button class="btn btn-round hideButton" ng-click="ic.fadeViewOut()" aria-label="Hide"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-<button class="btn btn-round settingsButton" aria-label="Settings"><a href="/settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></button>
+<button class="btn hideButton" ng-click="ic.fadeViewOut()" aria-label="Hide"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+<a class="routeLink" href="/settings"><button class="btn settingsButton" aria-label="Settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></button></a>
 <div id="topRow" class="row">
   <div class="timeCal col-sm-4">
     <div class="time text-center">
@@ -76,28 +76,27 @@
   </div>
   <div class="col-sm-4">
     <div class="transit" ng-click="hc.logTransit()">
-      <select class="form-control" ng-show="hc.stops.length != 0" ng-options="stop.name for stop in hc.stops" ng-model="hc.selectedDepartureStop" ng-change="hc.getDepartureInfo()"><option value="">Select A Bus Stop</option></select>
+      <select id="stopSelect" class="form-control" ng-show="hc.stops.length != 0" ng-options="stop.name for stop in hc.stops" ng-model="hc.selectedDepartureStop" ng-change="hc.getDepartureInfo()"><option value="">Select A Bus Stop</option></select>
       <div class="departureInfo" ng-show="hc.showDepartureInfo()" ng-class="hc.departureInfoClass">
         <div class="row busArrival">
-          <div class="col-sm-8">
-            <p class="">
-              Your bus will arrive at {{hc.selectedDepartureStop.name}} in:
-            </p>
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="arrivalText">
+                {{hc.departures[0].arrivalText}}
+              </p>
+            </div>
           </div>
-          <div class="col-sm-4">
-            {{hc.departures[0].departureText}}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-8" ng-click="hc.logMaps()">
-            You should leave to catch it in:
-          </div>
-          <div class="col-sm-4">
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="arrivalTime text-right">
+                {{hc.departures[0].departureText}}
+              </p>
+            </div>
 
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12 mapContainer">
               <ng-map id="map" center="minneapolis, mn" zoom="12"></ng-map>
           </div>
         </div>
