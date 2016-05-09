@@ -2,17 +2,17 @@ var router = require('express').Router();
 var request = require('request');
 var Style = require('../../models/styleModel');
 
-router.get('/apod', function(req, res){
-  request('https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR', function(err, response, body){
-    if (err){
-      console.log('Error getting APOD:', err);
-      res.sendStatus(500);
-    } else {
-      console.log('Got APOD:', response);
-      res.send(body);
-    }
-  });
-});
+// router.get('/apod', function(req, res){
+//   request('https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR', function(err, response, body){
+//     if (err){
+//       console.log('Error getting APOD:', err);
+//       res.sendStatus(500);
+//     } else {
+//       console.log('Got APOD:', response);
+//       res.send(body);
+//     }
+//   });
+// });
 
 router.put('/save', function(req, res){
   var styleObject = req.body;
@@ -26,7 +26,7 @@ router.put('/save', function(req, res){
       } else {
         console.log('Got APOD:', response);
         var jsBody = JSON.parse(body);
-        styleObject.background = 'url(\'' + jsBody.url + '\') no-repeat';
+        styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
         updateStyle(res, styleObject);
       }
     });
@@ -75,7 +75,19 @@ router.get('/all', function(req, res){
 });
 
 var updateStyle = function(res, styles){
-  Style.findOneAndUpdate({}, styles, function(err, style){
+  var applicableFields = {$set:{}};
+
+  if (styles.borderColor){
+    applicableFields.$set.borderColor = styles.borderColor;
+  }
+  if (styles.color){
+    applicableFields.$set.color = styles.color;
+  }
+  if(styles.background){
+    applicableFields.$set.background = styles.background;
+  }
+
+  Style.findOneAndUpdate({}, applicableFields, function(err, style){
     if(err){
       console.log('Error finding styles to update:', err);
       res.sendStatus(500);

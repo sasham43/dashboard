@@ -1,4 +1,4 @@
-var app = angular.module('dashboardApp', ['ngRoute', 'ngMap']);
+var app = angular.module('dashboardApp', ['ngRoute', 'ngMap', 'ngAnimate']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
   $routeProvider
@@ -25,6 +25,20 @@ app.controller('IndexController', ['StyleService', function(StyleService){
 
   ic.selectedStyle = StyleService.savedStyles;
 
+  ic.showView = false;
+
+  ic.fadeViewIn = function(){
+    console.log('Faded in');
+    ic.class = 'fadedIn';
+    ic.showView = true;
+  };
+
+  ic.fadeViewOut = function(){
+    console.log('Faded out');
+    ic.class = 'fadedOut';
+    ic.showView = false;
+  };
+
   StyleService.getStyles();
 }]);
 
@@ -44,12 +58,12 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
   hc.time = moment().format('hh:mm A');
 
   // attire icons
-  hc.umbrellaURL = 'assets/images/attire/umbrella-light.png';
-  hc.shortsURL = 'assets/images/attire/shorts-light.png';
-  hc.pantsURL = 'assets/images/attire/pants-light.png';
-  hc.jacketURL = 'assets/images/attire/jacket-light.png';
-  hc.mittensURL = 'assets/images/attire/mitten-light.png';
-  hc.tshirtURL = 'assets/images/attire/tshirt-light.png';
+  hc.umbrellaURL = 'assets/images/attire/light_umbrella-light.png';
+  hc.shortsURL = 'assets/images/attire/light_shorts-light.png';
+  hc.pantsURL = 'assets/images/attire/light_pants-light.png';
+  hc.jacketURL = 'assets/images/attire/light_jacket-light.png';
+  hc.mittensURL = 'assets/images/attire/light_mitten-light.png';
+  hc.tshirtURL = 'assets/images/attire/light_tshirt-light.png';
 
   // get transit info
   hc.stops = TransitService.savedStops;
@@ -62,13 +76,25 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
   hc.hourly = WeatherService.hourly;
 
   hc.getDepartureInfo = function(){
-    TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop.direction, hc.selectedDepartureStop.value);
+    if(hc.selectedDepartureStop){
+      TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop.direction, hc.selectedDepartureStop.value);
+    }
+  };
+
+  hc.showDepartureInfo = function(){
+    if(hc.selectedDepartureStop === null || hc.selectedDepartureStop.value === undefined){
+      hc.departureInfoClass="fadedOut";
+      return false;
+    } else {
+      hc.departureInfoClass="fadedIn";
+      return true;
+    }
   };
 
   hc.logMaps = function(){
       //console.log('latLng:', hc.latLng);
     //hc.map.center = hc.latLng;
-  }
+  };
 
   CalendarService.getCalendarEvents();
   WeatherService.getWeather();
@@ -116,7 +142,9 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
   };
 
   sc.getDirection = function(){
-    TransitService.getDirection(sc.selectedRoute);
+    if(sc.selectedRoute){
+      TransitService.getDirection(sc.selectedRoute);
+    }
   };
 
   sc.getStops = function(){
@@ -127,9 +155,15 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
     TransitService.createStop(sc.selectedStop, sc.selectedRoute, sc.selectedDirection);
   };
 
+  sc.cancelCreateStop = function(){
+    sc.stops.length = 0;
+    sc.routes.length = 0;
+    TransitService.clearCardinalDirections();
+  }
+
   sc.editBusStops = function(){
     TransitService.getAllSavedStops();
-  };
+  }
 
   sc.removeBusStop = function(){
     TransitService.removeBusStop(sc.selectedDepartureStop);
@@ -244,6 +278,11 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
     });
   };
 
+  var clearCardinalDirections = function(){
+    angular.copy({eastWest: false, northSouth: false}, cardinalDirections);
+    console.log(cardinalDirections);
+  }
+
   return {
     getRoutes: getRoutes,
     routes: routes,
@@ -257,7 +296,8 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
     savedStops: savedStops,
     getDepartureInfo: getDepartureInfo,
     departures: departures,
-    removeBusStop: removeBusStop
+    removeBusStop: removeBusStop,
+    clearCardinalDirections: clearCardinalDirections
   }
 }]);
 
@@ -369,9 +409,9 @@ app.factory('LocationService', ['NgMap', '$http', function(NgMap, $http){
   }
 }]);
 
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 //    Style Service (includes Astronomy picture of the day)
-/////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
 app.factory('StyleService', ['$http', function($http){
   var apod = {};

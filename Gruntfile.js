@@ -33,6 +33,8 @@ module.exports = function(grunt) {
                    "ngmap/build/scripts/ng-map.min.js",
                    "bootstrap/dist/css/bootstrap.min.css",
                    "bootstrap/dist/css/bootstrap.min.css.map",
+                   "angular-animate/angular-animate.min.js",
+                   "angular-animate/angular-animate.min.js.map",
                    "bootstrap/dist/js/bootstrap.min.js",
                    "bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
                    "bootstrap/dist/fonts/glyphicons-halflings-regular.woff",

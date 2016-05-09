@@ -46,7 +46,7 @@ function dayOrNight(currentTime, conditionObject){
 }
 
 function assignIconURL(dayOrNight, condition){
-  var iconURL = 'assets/images/weather/';
+  var iconURL = 'assets/images/weather/light_';
   if (dayOrNight === 'night'){
     switch(condition){
       case 'Chance of Flurries':

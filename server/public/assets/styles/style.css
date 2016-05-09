@@ -1,11 +1,27 @@
 body{
-  background-color: tomato;
+  /*background-color: tomato;*/
+  background-size: cover;
+}
+
+.view{
+  border-color: inherit;
+}
+
+.row{
+  border-color: inherit;
+}
+
+.clickThing{
+  height: 768px;
+  /*width: 1024px;*/
 }
 
 .main{
-  border: solid 1px #fff;
+  border: solid 1px;
   height: 748px;
   margin: 10px 0 10px 0;
+  border-color: inherit;
+  /*transition: 1s ease-in-out all;*/
 }
 
 /*Buttons*/
@@ -32,7 +48,8 @@ body{
 
 .time{
   background-color: rgba(30, 30, 30, 0.5);
-  height: 143px;
+  height: 133px;
+  margin-bottom: 10px;
 }
 
 .calendar{
@@ -65,8 +82,7 @@ form{
 }
 
 .styleForm{
-  background-color: rgba(30, 30, 30, 0.5);
-  height: 240px;
+  height: 230px;
 }
 
 .locationForm{
@@ -170,6 +186,8 @@ form{
 
 .locationSettings{
   background-color: rgba(30, 30, 30, 0.5);
+  border-bottom: solid 1px;
+  border-color: inherit;
 }
 
 .currentLocation{
@@ -180,12 +198,35 @@ form{
 
 .styleSettings{
   background-color: rgba(30, 30, 30, 0.5);
+  border-bottom: solid 1px;
+  border-color: inherit;
+}
+
+.exampleStyle{
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+}
+
+.exampleStyleContainer{
+  vertical-align: middle;
+  font-size: 25px;
 }
 
 /*Transit*/
 
 .transitSettings{
   background-color: rgba(30, 30, 30, 0.5);
+  /*margin: 0 15px;*/
+  font-size: 18px;
+}
+
+.busRadio{
+  font-size: 20px;
+}
+
+.firstRadio{
+  margin-right: 100px;
 }
 
 #createStop{
@@ -203,17 +244,20 @@ form{
 #removeStop{
   position: absolute;
   right: 0;
-  bottom: 68px;
-}
-
-#updateStop{
-  position: absolute;
-  left: 0;
-  bottom: 34px;
-}
-
-#cancelUpdateStop{
-  position: absolute;
   bottom: 0;
-  left: 0;
+}
+
+/*Animations*/
+
+.fadedIn{
+  transition: 1s ease-in-out all;
+  opacity: 1;
+}
+.fadedOut{
+  transition: 1s ease-in-out all;
+  opacity: 0;
+}
+
+.main.ng-hide{
+  opacity: 0;
 }
