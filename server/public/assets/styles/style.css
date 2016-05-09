@@ -99,7 +99,8 @@ body{
 }
 
 .news{
-  background-color: #333;
+  margin-top: 15px;
+  background-color: rgba(30, 30, 30, 0.5);
   height: 277px;
 }
 
@@ -303,4 +304,29 @@ form{
 
 .main.ng-hide{
   opacity: 0;
+}
+
+/*News*/
+
+.news{
+  padding: 20px;
+}
+
+.carousel-control{
+  height: 277px;
+}
+
+.articleAbstract, .articleTitle{
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+#rightSlide{
+  right: 15px;
+  top: 16px;
+}
+
+#leftSlide{
+  left: 15px;
+  top: 16px;
 }

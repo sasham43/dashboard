@@ -107,10 +107,31 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="news">
-      <h1>Headline</h1>
-      <p>
-        Capitalise on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.
-      </p>
+      <div class="newsSlider text-center" ng-repeat="article in hc.articleList" ng-hide="!hc.isCurrentIndex($index)">
+        <h2 class="articleTitle">{{article.title}}</h2>
+        <p class="articleAbstract">
+          {{article.abstract}}
+        </p>
+      </div>
+
+      <div class="wrapper">
+        <ol class="carousel-indicators">
+          <li ng-repeat="article in hc.articleList" ng-click="hc.setCurrentIndex($index)" ng-class="{'active': hc.isCurrentIndex($index)}">
+            <a href="#" ></a>
+          </li>
+        </ol>
+      </div>
+
+      <a id="leftSlide" class="left carousel-control" href="#" role="button" ng-click="hc.previous()">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a id="rightSlide" class="right carousel-control" href="#" role="button" ng-click="hc.next()">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+
+      </div>
     </div>
   </div>
 </div>

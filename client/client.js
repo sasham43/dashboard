@@ -46,15 +46,9 @@ app.controller('IndexController', ['StyleService', function(StyleService){
 //    Home Controller
 /////////////////////////////////////////////
 
-app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 'WeatherService', 'CalendarService', '$http', function(NgMap, LocationService, TransitService, WeatherService, CalendarService, $http){
+app.controller('HomeController', ['NewsService','NgMap', 'LocationService', 'TransitService', 'WeatherService', 'CalendarService', '$http', function(NewsService,NgMap, LocationService, TransitService, WeatherService, CalendarService, $http){
   console.log('home controller loaded');
   var hc = this;
-
-  // routing
-  // hc.routeSettings = function(){
-  //   $location.path('/views/#/settings.html');
-  // };
-
 
   // location
   hc.location = LocationService.location;
@@ -80,6 +74,7 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
   hc.eventList = CalendarService.events;
   hc.conditions = WeatherService.conditions;
   hc.hourly = WeatherService.hourly;
+  hc.articleList = NewsService.articleList;
 
   hc.getDepartureInfo = function(){
     if(hc.selectedDepartureStop){
@@ -98,15 +93,43 @@ app.controller('HomeController', ['NgMap', 'LocationService', 'TransitService', 
     }
   };
 
-  hc.logMaps = function(){
-      //console.log('latLng:', hc.latLng);
-    //hc.map.center = hc.latLng;
+  // news slider
+  hc.currentIndex = 0;
+
+  hc.setCurrentIndex = function(index){
+    hc.currentIndex = index;
+  };
+
+  hc.isCurrentIndex = function(index){
+    // maybe?
+    if (hc.currentIndex === index){
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  hc.next = function(){
+    if (hc.currentIndex === hc.articleList.length-1){
+      hc.currentIndex = 0;
+    } else {
+      hc.currentIndex++;
+    }
+  };
+
+  hc.previous = function(){
+    if(hc.currentIndex === 0){
+      hc.currentIndex = hc.articleList.length-1;
+    } else {
+      hc.currentIndex--;
+    }
   };
 
   CalendarService.getCalendarEvents();
   WeatherService.getWeather();
   TransitService.getAllSavedStops();
   LocationService.getLocation();
+  NewsService.getNews();
 
 }]);
 
@@ -465,5 +488,25 @@ app.factory('StyleService', ['$http', function($http){
     saveStyles: saveStyles,
     getStyles: getStyles,
     savedStyles: savedStyles
+  }
+}]);
+
+/////////////////////////////////////////////////////////////
+//    News Service
+/////////////////////////////////////////////////////////////
+
+app.factory('NewsService', ['$http', function($http){
+  var articleList = [];
+
+  var getNews = function(){
+    $http.get('/news/viewed').then(function(response){
+      console.log('Client side news response:', response);
+      angular.copy(response.data.results, articleList);
+    });
+  };
+
+  return{
+    getNews: getNews,
+    articleList: articleList
   }
 }]);
