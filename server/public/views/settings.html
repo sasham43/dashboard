@@ -4,42 +4,49 @@
 <div class="row">
   <div class="col-sm-12 styleSettings">
     <div class="col-sm-6">
-      <form class="styleForm" ng-submit="sc.saveStyles()">
+      <h2>Current Styles</h2>
+      <div class="row exampleStyleContainer">
+        <div class="col-sm-9">
+          Border Color:
+        </div>
+        <div class="col-sm-3">
+          <div class="exampleStyle" colorpicker ng-style="{'background': ic.selectedStyle.borderColor}" ng-model="sc.selectedStyle.borderColor" ></div>
+        </div>
+      </div>
+      <div class="row exampleStyleContainer">
+        <div class="col-sm-9">
+          Text Color:
+        </div>
+        <div class="col-sm-3">
+            <div class="exampleStyle" colorpicker ng-model="sc.selectedStyle.color" ng-style="{'background-color': ic.selectedStyle.color}"></div>
+        </div>
+
+      </div>
+      <div class="row exampleStyleContainer">
+        <div class="col-sm-9">
+          Background:
+        </div>
+        <div class="col-sm-3">
+            <div class="exampleStyle" colorpicker ng-model="sc.selectedStyle.background" ng-style="{background: ic.selectedStyle.background}"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <form class="styleForm">
         <input class="form-control textInput" type="text" placeholder="border color" ng-model="sc.selectedStyle.borderColor"/>
         <input class="form-control textInput" type="text" placeholder="text color" ng-model="sc.selectedStyle.color"/>
         <input class="form-control textInput" type="text" placeholder="background color" ng-model="sc.selectedStyle.background"/>
-        <label id="apodCheckboxLabel" for="apodCheckbox"><input class="form-inline" type="checkbox" id="apodCheckbox" ng-model="sc.selectedStyle.useAPOD"/>Use Astronomy Picture of the Day</label>
-        <button id="saveStyles" type="submit" class="btn btn-success form-control">Save</button>
+        <input class="form-inline" type="checkbox" id="apodCheckbox" ng-model="sc.selectedStyle.useAPOD"/><label id="apodCheckboxLabel" for="apodCheckbox">Use Astronomy Picture of the Day</label>
+        <button id="saveStyles" type="submit" class="btn btn-success form-control" ng-click="sc.saveStyles()">Save</button>
         <button id="cancelStyles" class="btn btn-danger form-control" ng-click="sc.cancelSaveStyles()">Cancel</button>
       </form>
-    </div>
-    <div class="col-sm-6">
-      <h2>Current Styles</h2>
-      <div class="exampleStyleContainer">
-        Border Color: <div class="exampleStyle" ng-style="{'background': ic.selectedStyle.borderColor}"></div>
-      </div>
-      <div class="exampleStyleContainer">
-        Text Color: <div class="exampleStyle" ng-style="{'background-color': ic.selectedStyle.color}"></div>
-      </div>
-      <div class="exampleStyleContainer">
-        Background Color: <div class="exampleStyle" ng-style="{background: ic.selectedStyle.background}"></div>
-      </div>
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-sm-12 locationSettings">
-    <div class="col-sm-6">
-      <form class="locationForm" ng-submit="sc.setLocation()">
-        <input class="form-control textInput" type="text" placeholder="address" ng-model="sc.location.address"/>
-        <input class="form-control textInput" type="text" placeholder="city" ng-model="sc.location.city"/>
-        <input class="form-control textInput" type="text" placeholder="state" ng-model="sc.location.state"/>
-        <input class="form-control textInput" type="text" placeholder="zip" ng-model="sc.location.zip"/>
-        <button id="saveLocation" type="submit" class="btn btn-success form-control">Save</button>
-        <button id="cancelLocation" class="btn btn-danger form-control" ng-click="sc.cancelSaveLocation()">Cancel</button>
-      </form>
-    </div>
     <div class="col-sm-6 currentLocation">
       <h2>Current Location</h2>
       <p>
@@ -49,11 +56,30 @@
         {{sc.currentLocation.city}} {{sc.currentLocation.state}} {{sc.currentLocation.zip}}
       </p>
     </div>
+    <div class="col-sm-6">
+      <form class="locationForm" >
+        <input class="form-control textInput" type="text" placeholder="address" ng-model="sc.location.address"/>
+        <input class="form-control textInput" type="text" placeholder="city" ng-model="sc.location.city"/>
+        <input class="form-control textInput" type="text" placeholder="state" ng-model="sc.location.state"/>
+        <input class="form-control textInput" type="text" placeholder="zip" ng-model="sc.location.zip"/>
+        <button id="saveLocation" type="submit" ng-click="sc.setLocation()" class="btn btn-success form-control">Save</button>
+        <button id="cancelLocation" class="btn btn-danger form-control" ng-click="sc.cancelSaveLocation()">Cancel</button>
+      </form>
+    </div>
+
   </div>
 </div>
 
 <div class="row">
   <div class="col-sm-12 transitSettings">
+
+    <div class="col-sm-6">
+      <form class="editTransitForm">
+        <select id="removeStopSelect" class="form-control" ng-show="sc.editStops.length != 0" ng-options="stop.name for stop in sc.editStops" ng-model="sc.selectedDepartureStop" ng-change=""><option value="">Select A Bus Stop</option></select>
+        <button id="removeStop" class="btn btn-warning form-control" ng-show="sc.editStops.length != 0" ng-click="sc.removeBusStop()">Remove Stop</button>
+
+      </form>
+    </div>
     <div class="col-sm-6">
       <form class="transitForm" ng-click="sc.logDirections()">
         <button id="addStop" class="btn btn-info form-control" ng-click="sc.getRoutes()">Add a Bus Stop</button>
@@ -75,20 +101,5 @@
 
       </form>
     </div>
-    <div class="col-sm-6">
-      <form class="editTransitForm">
-        <select id="removeStopSelect" class="form-control" ng-show="sc.editStops.length != 0" ng-options="stop.name for stop in sc.editStops" ng-model="sc.selectedDepartureStop" ng-change=""><option value="">Select A Bus Stop</option></select>
-        <button id="removeStop" class="btn btn-warning form-control" ng-show="sc.editStops.length != 0" ng-click="sc.removeBusStop()">Remove Stop</button>
-
-      </form>
-    </div>
   </div>
-</div>
-<div class="modal">
-  <!--  get routes -> pick route -->
-  <select>
-  </select>
-  <!-- get stops for that route -> pick stop -->
-
-
 </div>

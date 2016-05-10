@@ -1,4 +1,4 @@
-var app = angular.module('dashboardApp', ['ngRoute', 'ngMap', 'ngAnimate']);
+var app = angular.module('dashboardApp', ['colorpicker.module', 'ngRoute', 'ngMap', 'ngAnimate']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
   $routeProvider
@@ -162,6 +162,7 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
 
   // location
   sc.setLocation = function(){
+    console.log('saving location');
     LocationService.setLocation(sc.location.address, sc.location.city, sc.location.state, sc.location.zip, sc.location.weather, sc.location.transit);
   };
 

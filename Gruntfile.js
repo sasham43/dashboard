@@ -39,7 +39,9 @@ module.exports = function(grunt) {
                    "bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
                    "bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
                    "bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
-                   "moment/min/moment.min.js"
+                   "moment/min/moment.min.js",
+                   "angular-bootstrap-colorpicker/css/colorpicker.css",
+                   "angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"
                ],
                "dest": "server/public/vendor/"
            }

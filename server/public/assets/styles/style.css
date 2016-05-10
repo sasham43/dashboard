@@ -94,8 +94,20 @@ body{
   height: 297px;
   overflow: scroll;
   padding: 10px;
-  -webkit-mask-image: -webkit-gradient(linear, left 5%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+  -webkit-mask-image: -webkit-gradient(linear, left 80%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }
+
+/*.calendar:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 87%;
+  height: 20%;
+  left: 15px;
+  bottom: 0;
+  background: -webkit-linear-gradient(transparent, #FFF) left repeat;
+  background: linear-gradient(transparent, #FFF) left repeat;
+}*/
 
 .weather{
   background-color: rgba(30, 30, 30, 0.5);
@@ -181,7 +193,8 @@ form{
   height: 60px;
   padding: 0 15px;
   /*box-shadow: 0 5px 1px 1px rgba(30, 30, 30, 0.2) inset;*/
-  -webkit-mask-image: -webkit-gradient(linear, left 1%, right bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+  /*-webkit-mask-image: -webkit-gradient(linear, left center, right center, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));*/
+      -webkit-mask-image: -webkit-gradient( linear, left top, right bottom, color-stop(0.00, rgba(0,0,0,1)), color-stop(0.35, rgba(0,0,0,1)), color-stop(0.50, rgba(0,0,0,1)), color-stop(0.65, rgba(0,0,0,0.9)), color-stop(1.00, rgba(0,0,0,0)));
 }
 
 .oneHour{
@@ -253,17 +266,29 @@ form{
 #saveLocation{
   position: absolute;
   width: 424px;
-  bottom: 34px;
+  bottom: 38px;
   background: rgba(0, 0, 0, 0);
   color: #5cb85c;
+}
+
+#saveLocation:focus{
+  outline: none;
+  background: #1b7c1b;
+  color: white;
 }
 
 #cancelLocation{
   position: absolute;
   width: 424px;
-  bottom: 0;
+  bottom: 2px;
   background: rgba(0, 0, 0, 0);
   color: #d9534f;
+}
+
+#cancelLocation:focus{
+  background: #961512;
+  color: white;
+  outline: none;
 }
 
 /*Style*/
@@ -291,20 +316,37 @@ form{
 
 #saveStyles{
   position: absolute;
-  bottom: 34px;
+  bottom: 38px;
   left: 15px;
   width: 424px;
   background: rgba(0, 0, 0, 0);
   color: #5cb85c;
 }
 
+#saveStyles:focus{
+  outline: none;
+  background: #1b7c1b;
+  color: white;
+}
+
 #cancelStyles{
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   left: 15px;
   width: 424px;
   background: rgba(0, 0, 0, 0);
   color: #d9534f;
+}
+
+#cancelStyles:focus{
+  background: #961512;
+  color: white;
+  outline: none;
+}
+
+.dropdown-menu{
+  background: rgba(255, 255, 255, 0.3);
+  /*background: rgba(0,0,0, 0.3);*/
 }
 
 /*Transit*/
@@ -328,22 +370,40 @@ form{
   background: rgba(0, 0, 0, 0);
 }
 
+#addStop:focus{
+  background: #1993B6;
+  color: white;
+  outline: none;
+}
+
 #createStop{
   position: absolute;
   left: 15px;
-  bottom: 34px;
+  bottom: 38px;
   width: 424px;
   background: rgba(0, 0, 0, 0);
   color: #5cb85c;
 }
 
+#createStop:focus{
+  outline: none;
+  background: #1b7c1b;
+  color: white;
+}
+
 #cancelCreateStop{
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   left: 15px;
   width: 424px;
   background: rgba(0, 0, 0, 0);
   color: #d9534f;
+}
+
+#cancelCreateStop:focus{
+  background: #961512;
+  color: white;
+  outline: none;
 }
 
 #removeStop{
@@ -352,6 +412,12 @@ form{
   width: 424px;
   color: #ebaa4c;
   background: rgba(0, 0, 0, 0);
+}
+
+#remoteStop:focus{
+  background: #a86a10;
+  color: white;
+  outline: none;
 }
 
 /*Animations*/
