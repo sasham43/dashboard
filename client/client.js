@@ -78,7 +78,7 @@ app.controller('HomeController', ['NewsService','NgMap', 'LocationService', 'Tra
 
   hc.getDepartureInfo = function(){
     if(hc.selectedDepartureStop){
-      TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop.direction, hc.selectedDepartureStop.value);
+      TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop, hc.selectedDepartureStop.value);
     }
   };
 
@@ -101,7 +101,6 @@ app.controller('HomeController', ['NewsService','NgMap', 'LocationService', 'Tra
   };
 
   hc.isCurrentIndex = function(index){
-    // maybe?
     if (hc.currentIndex === index){
       return true;
     } else {
@@ -166,6 +165,10 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
     LocationService.setLocation(sc.location.address, sc.location.city, sc.location.state, sc.location.zip, sc.location.weather, sc.location.transit);
   };
 
+  sc.cancelSaveLocation = function(){
+    sc.location = {};
+  };
+
   // transit
   sc.getRoutes = function(){
     TransitService.getRoutes();
@@ -191,10 +194,6 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
     TransitService.clearCardinalDirections();
   }
 
-  sc.editBusStops = function(){
-    TransitService.getAllSavedStops();
-  }
-
   sc.removeBusStop = function(){
     TransitService.removeBusStop(sc.selectedDepartureStop);
   }
@@ -202,12 +201,18 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
   // styles
   sc.saveStyles = function(){
     StyleService.saveStyles(sc.selectedStyle);
+    sc.selectedStyle = {};
   };
+
+  sc.cancelSaveStyles = function(){
+    sc.selectedStyle = {};
+  }
 
   sc.getStyles = function(){
     StyleService.getStyles();
   }
 
+  TransitService.getAllSavedStops();
   LocationService.getLocation();
 }]);
 
@@ -285,7 +290,7 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
 
   var getDepartureInfo = function(routeID, directionID, stopID){
     console.log('Getting departure info for:', routeID, directionID, stopID);
-    $http.get('/transit/departure/' + routeID + '/' + directionID + '/' + stopID).then(function(response){
+    $http.get('/transit/departure/' + routeID + '/' + directionID.direction + '/' + stopID).then(function(response){
       console.log('Got departure info:', response.data);
       angular.copy(response.data, departures);
 
@@ -300,6 +305,22 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
         departures[0].departureText = '';
       }
       console.log('departures[0]:', departures[0]);
+
+      // stop names don't match up
+      // $http.get('/transit/stop-locations').then(function(response){
+      //   console.log('Stop Locations:', response.data);
+      //   var stopArray = response.data;
+      //   var stopName = directionID.name.trim();
+      //   var selectedStop = {};
+      //
+      //   stopArray.map(function(stop){
+      //     if (stop.stop_name.includes(stopName)){
+      //       angular.copy(stop, selectedStop);
+      //       console.log('found the stop:', stop);
+      //     }
+      //   });
+      //   console.log('map done');
+      // });
 
       // google maps
       NgMap.getMap({id: 'map'}).then(function(map){

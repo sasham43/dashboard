@@ -110,7 +110,7 @@
       <div class="newsSlider text-center" ng-repeat="article in hc.articleList" ng-hide="!hc.isCurrentIndex($index)">
         <h2 class="articleTitle">{{article.title}}</h2>
         <p class="articleAbstract">
-          {{article.abstract}}
+          <a ng-href="{{article.url}}" target="_blank">{{article.abstract}}</a>
         </p>
       </div>
 

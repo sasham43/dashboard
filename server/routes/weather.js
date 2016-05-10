@@ -62,7 +62,7 @@ router.get('/', function(req, res){
           conditionObject.high = Math.max.apply(null,tempArray);
           conditionObject.low = Math.min.apply(null,tempArray);
           conditionObject.iconURL = weather.assignIconURL(conditionObject.dayOrNight, conditionObject.conditions);
-          weather.assignAttire(conditionObject);
+          weather.assignAttire(conditionObject, hourlyList);
 
           var responseObject = {conditionObject, hourlyList};
 

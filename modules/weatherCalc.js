@@ -1,4 +1,4 @@
-function assignAttire(conditionObject){
+function assignAttire(conditionObject, hourly){
   conditionObject.umbrella = false;
   conditionObject.shorts = false;
   conditionObject.pants = false;
@@ -7,9 +7,14 @@ function assignAttire(conditionObject){
   conditionObject.tshirt = false;
 
   // umbrella
-  if(conditionObject.precipToday > 0.1){
-    conditionObject.umbrella = true;
-  }
+  hourly.map(function(hour){
+    if(hour.condition.toLowerCase().includes('rain')){
+      conditionObject.umbrella = true;
+    }
+    if(conditionObject.conditions.toLowerCase().includes('rain')){
+      conditionObject.umbrella = true;
+    }
+  });
 
   // mittens
   if(conditionObject.temp <= 40){

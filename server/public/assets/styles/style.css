@@ -4,6 +4,11 @@ body{
   height:100vh;
 }
 
+.textInput{
+  background: rgba(0,0,0,0);
+  color: inherit;
+}
+
 #stopSelect{
   color: inherit;
   background-color: rgba(0,0,0,0);
@@ -245,6 +250,22 @@ form{
   font-size: 25px;
 }
 
+#saveLocation{
+  position: absolute;
+  width: 424px;
+  bottom: 34px;
+  background: rgba(0, 0, 0, 0);
+  color: #5cb85c;
+}
+
+#cancelLocation{
+  position: absolute;
+  width: 424px;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  color: #d9534f;
+}
+
 /*Style*/
 
 .styleSettings{
@@ -264,6 +285,28 @@ form{
   font-size: 25px;
 }
 
+#apodCheckboxLabel{
+  font-size:20px;
+}
+
+#saveStyles{
+  position: absolute;
+  bottom: 34px;
+  left: 15px;
+  width: 424px;
+  background: rgba(0, 0, 0, 0);
+  color: #5cb85c;
+}
+
+#cancelStyles{
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  width: 424px;
+  background: rgba(0, 0, 0, 0);
+  color: #d9534f;
+}
+
 /*Transit*/
 
 .transitSettings{
@@ -280,22 +323,35 @@ form{
   margin-right: 100px;
 }
 
+#addStop{
+  color: #5bc0de;
+  background: rgba(0, 0, 0, 0);
+}
+
 #createStop{
   position: absolute;
-  left: 0;
+  left: 15px;
   bottom: 34px;
+  width: 424px;
+  background: rgba(0, 0, 0, 0);
+  color: #5cb85c;
 }
 
 #cancelCreateStop{
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 15px;
+  width: 424px;
+  background: rgba(0, 0, 0, 0);
+  color: #d9534f;
 }
 
 #removeStop{
   position: absolute;
-  right: 0;
   bottom: 0;
+  width: 424px;
+  color: #ebaa4c;
+  background: rgba(0, 0, 0, 0);
 }
 
 /*Animations*/
@@ -327,6 +383,12 @@ form{
 .articleAbstract, .articleTitle{
   margin-left: 80px;
   margin-right: 80px;
+}
+
+.articleAbstract > a{
+  text-decoration: none;
+  font-size: 16px;
+  color: inherit;
 }
 
 #rightSlide{

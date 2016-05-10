@@ -17,6 +17,7 @@
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "cookie-parser": "^1.4.1",
+    "csv-parser": "^1.9.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "google-auth-library": "^0.9.7",

@@ -1,18 +1,7 @@
 var router = require('express').Router();
 var request = require('request');
+var moment = require('moment');
 var Style = require('../../models/styleModel');
-
-// router.get('/apod', function(req, res){
-//   request('https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR', function(err, response, body){
-//     if (err){
-//       console.log('Error getting APOD:', err);
-//       res.sendStatus(500);
-//     } else {
-//       console.log('Got APOD:', response);
-//       res.send(body);
-//     }
-//   });
-// });
 
 router.put('/save', function(req, res){
   var styleObject = req.body;
@@ -26,40 +15,27 @@ router.put('/save', function(req, res){
       } else {
         console.log('Got APOD:', response);
         var jsBody = JSON.parse(body);
-        styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
+        if(!jsBody.url.includes('youtube.com')){
+          styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
+        } else {
+          var yesterday = moment().add(-1, 'day').format('YYYY-MM-DD');
+          request('https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR&date=' + yesterday, function(err, response, body){
+            if (err){
+              console.log('Error getting APOD:', err);
+              res.sendStatus(500);
+            } else {
+              console.log('Got APOD:', response);
+              var jsBody = JSON.parse(body);
+              styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
+            }
+          });
+        }
         updateStyle(res, styleObject);
       }
     });
   } else {
     updateStyle(res, styleObject);
   }
-
-  // remove old style
-  // Style.find({}, function(err, styles){
-  //   if (err){
-  //     console.log('Error finding styles to remove:', err);
-  //   } else {
-  //     console.log('Found styles to remove:', styles);
-  //     if (styles.length > 0){
-  //       styles[0].remove(function(err){
-  //         if (err){
-  //           console.log('Error removing styles:', err);
-  //         }
-  //       });
-  //     }
-  //
-  //     // create new style
-  //     Style.create(styleObject, function(err){
-  //       if (err){
-  //         console.log('Error saving styles:', err);
-  //         res.sendStatus(500);
-  //       } else {
-  //         console.log('Styles saved successfully.');
-  //         res.sendStatus(200);
-  //       }
-  //     });
-  //   }
-  // }); // should use put instead and update the thing
 });
 
 router.get('/all', function(req, res){

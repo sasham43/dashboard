@@ -4,13 +4,13 @@
 <div class="row">
   <div class="col-sm-12 styleSettings">
     <div class="col-sm-6">
-      <form class="styleForm">
-        <input class="form-control" type="text" placeholder="border color" ng-model="sc.selectedStyle.borderColor"/>
-        <input class="form-control" type="text" placeholder="text color" ng-model="sc.selectedStyle.color"/>
-        <input class="form-control" type="text" placeholder="background color" ng-model="sc.selectedStyle.background"/>
-        <input class="form-inline" type="checkbox" id="apodCheckbox" ng-model="sc.selectedStyle.useAPOD"/><label for="apodCheckbox">Use Astronomy Picture of the Day</label>
-        <button type="submit" class="btn btn-success form-control" ng-click="sc.saveStyles()">Save</button>
-        <button class="btn btn-danger form-control">Cancel</button>
+      <form class="styleForm" ng-submit="sc.saveStyles()">
+        <input class="form-control textInput" type="text" placeholder="border color" ng-model="sc.selectedStyle.borderColor"/>
+        <input class="form-control textInput" type="text" placeholder="text color" ng-model="sc.selectedStyle.color"/>
+        <input class="form-control textInput" type="text" placeholder="background color" ng-model="sc.selectedStyle.background"/>
+        <label id="apodCheckboxLabel" for="apodCheckbox"><input class="form-inline" type="checkbox" id="apodCheckbox" ng-model="sc.selectedStyle.useAPOD"/>Use Astronomy Picture of the Day</label>
+        <button id="saveStyles" type="submit" class="btn btn-success form-control">Save</button>
+        <button id="cancelStyles" class="btn btn-danger form-control" ng-click="sc.cancelSaveStyles()">Cancel</button>
       </form>
     </div>
     <div class="col-sm-6">
@@ -32,12 +32,12 @@
   <div class="col-sm-12 locationSettings">
     <div class="col-sm-6">
       <form class="locationForm" ng-submit="sc.setLocation()">
-        <input class="form-control" type="text" placeholder="address" ng-model="sc.location.address"/>
-        <input class="form-control" type="text" placeholder="city" ng-model="sc.location.city"/>
-        <input class="form-control" type="text" placeholder="state" ng-model="sc.location.state"/>
-        <input class="form-control" type="text" placeholder="zip" ng-model="sc.location.zip"/>
-        <button type="submit" class="btn btn-success form-control">Save</button>
-        <button class="btn btn-danger form-control">Cancel</button>
+        <input class="form-control textInput" type="text" placeholder="address" ng-model="sc.location.address"/>
+        <input class="form-control textInput" type="text" placeholder="city" ng-model="sc.location.city"/>
+        <input class="form-control textInput" type="text" placeholder="state" ng-model="sc.location.state"/>
+        <input class="form-control textInput" type="text" placeholder="zip" ng-model="sc.location.zip"/>
+        <button id="saveLocation" type="submit" class="btn btn-success form-control">Save</button>
+        <button id="cancelLocation" class="btn btn-danger form-control" ng-click="sc.cancelSaveLocation()">Cancel</button>
       </form>
     </div>
     <div class="col-sm-6 currentLocation">
@@ -56,7 +56,7 @@
   <div class="col-sm-12 transitSettings">
     <div class="col-sm-6">
       <form class="transitForm" ng-click="sc.logDirections()">
-        <button class="btn btn-info form-control" ng-click="sc.getRoutes()">Add a Bus Stop</button>
+        <button id="addStop" class="btn btn-info form-control" ng-click="sc.getRoutes()">Add a Bus Stop</button>
         <select id="addRouteSelect" class="form-control" ng-options="route.Description for route in sc.routes" ng-model="sc.selectedRoute" ng-show="sc.routes.length != 0" ng-change="sc.getDirection()"><option value="">Select A Bus Route</option></select>
 
         <div class="radios text-center">
@@ -77,7 +77,6 @@
     </div>
     <div class="col-sm-6">
       <form class="editTransitForm">
-        <button class="btn btn-info form-control" ng-click="sc.editBusStops()">Edit Bus Stop</button>
         <select id="removeStopSelect" class="form-control" ng-show="sc.editStops.length != 0" ng-options="stop.name for stop in sc.editStops" ng-model="sc.selectedDepartureStop" ng-change=""><option value="">Select A Bus Stop</option></select>
         <button id="removeStop" class="btn btn-warning form-control" ng-show="sc.editStops.length != 0" ng-click="sc.removeBusStop()">Remove Stop</button>
 

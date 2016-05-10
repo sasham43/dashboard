@@ -2,6 +2,7 @@ var router = require('express').Router();
 var request = require('request');
 
 var Stop = require('../../models/transitModel');
+var stopArray = require('../../modules/csvParse');
 
 router.get('/routes', function(req, res){
   var routesQuery = 'http://svc.metrotransit.org/NexTrip/Routes';
@@ -146,6 +147,10 @@ router.delete('/remove/:id', function(req, res){
       res.sendStatus(200);
     }
   });
+});
+
+router.get('/stop-locations', function(req, res){
+  res.send(stopArray);
 });
 
 module.exports = router;
