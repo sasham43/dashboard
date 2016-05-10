@@ -21,14 +21,12 @@
 
   </head>
   <body class="container" ng-controller="IndexController as ic" ng-style="ic.selectedStyle">
-    <!-- <button ng-click="ic.fadeViewIn()">Click</button> -->
 
-    <div class="main col-sm-12 col-md-12" ng-show="ic.showView" ng-class="ic.class">
+     <div class="main col-sm-12 col-md-12" ng-show="ic.showView" ng-class="ic.class">
       <div ng-view class="view"></div>
-
     </div>
-    <div class="clickThing col-sm-12" ng-show="!ic.showView" ng-click="ic.fadeViewIn()">
 
+    <div class="clickThing col-sm-12" ng-show="!ic.showView" ng-click="ic.fadeViewIn()">
     </div>
   </body>
 </html>
