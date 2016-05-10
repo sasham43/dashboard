@@ -1,8 +1,13 @@
+@font-face{font-family: Open-Sans; src: url('../fonts/OpenSans-Light.ttf'); }
+
 body{
   /*background-color: tomato;*/
   background-size: cover;
   height:100vh;
+  font-family: Open-Sans, Helvetica, sans-serif;
 }
+
+
 
 .textInput{
   background: rgba(0,0,0,0);
@@ -67,6 +72,21 @@ body{
   border: solid 1px;
   top: 0;
   right: -40px;
+}
+
+.settingsButton:hover{
+  background-color: white;
+  color: black;
+}
+
+.homeButton:hover{
+  background-color: white;
+  color: black;
+}
+
+.hideButton:hover{
+  background-color: white;
+  color: black;
 }
 
 .homeButton{
