@@ -34,12 +34,12 @@ var updateStyle = function(res, styles){
   if(styles.background){
     applicableFields.$set.background = styles.background;
   }
-  if(styles.title){
+  // if(styles.title){
     applicableFields.$set.title = styles.title;
-  }
-  if(styles.explanation){
+  // }
+  // if(styles.explanation){
     applicableFields.$set.explanation = styles.explanation;
-  }
+  // }
 
   Style.findOneAndUpdate({}, applicableFields, function(err, style){
     if(err){
@@ -55,9 +55,8 @@ var updateStyle = function(res, styles){
 
 var getAPOD = function(res, styleObject, apodDate){
   var apodKey = 'vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR';
-  var apodInfo = {};
   var apodBaseURL = 'https://api.nasa.gov/planetary/apod?hd=true&api_key=' + apodKey;
-  if(apodDate){
+  if(styleObject.useAPOD && apodDate){
     var formattedDate = moment(apodDate).format('YYYY-MM-DD');
     request(apodBaseURL + '&date=' + formattedDate, function(err, response, body){
       if(err){
@@ -72,12 +71,12 @@ var getAPOD = function(res, styleObject, apodDate){
           styleObject.background = 'url(\'' + jsBody.hdurl + '\') center/cover no-repeat';
           styleObject.title = jsBody.title;
           styleObject.explanation = jsBody.explanation;
-          updateStyle(res, styleObject, apodInfo);
+          updateStyle(res, styleObject);
         }
       }
 
     });
-  } else {
+  } else if (styleObject.useAPOD) {
     request(apodBaseURL, function(err, response, body){
       if(err){
         console.log('Error getting APOD.');
@@ -91,11 +90,15 @@ var getAPOD = function(res, styleObject, apodDate){
           styleObject.background = 'url(\'' + jsBody.hdurl + '\') center/cover no-repeat';
           styleObject.title = jsBody.title;
           styleObject.explanation = jsBody.explanation;
-          updateStyle(res, styleObject, apodInfo);
+          updateStyle(res, styleObject);
         }
       }
 
     });
+  } else {
+    styleObject.title = '';
+    styleObject.explanation = '';
+    updateStyle(res, styleObject);
   }
 };
 

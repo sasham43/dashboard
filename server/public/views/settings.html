@@ -30,7 +30,7 @@
             <div class="exampleStyle" colorpicker ng-model="sc.selectedStyle.background" ng-style="{background: ic.selectedStyle.background}"></div>
         </div>
       </div>
-      <p class="apodInfo" >
+      <p class="apodInfo" ng-show="ic.selectedStyle.title">
         {{ic.selectedStyle.title}}: {{ic.selectedStyle.explanation}}
       </p>
     </div>
