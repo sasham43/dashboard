@@ -386,6 +386,11 @@ form{
   margin-right: 100px;
 }
 
+.radios{
+  border: solid 1px;
+  border-radius: 5px;
+}
+
 #addStop{
   color: #5bc0de;
   background: rgba(0, 0, 0, 0);
