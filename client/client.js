@@ -16,9 +16,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   $locationProvider.html5Mode(true);
 }]);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Index Controller
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.controller('IndexController', ['StyleService', function(StyleService){
   var ic = this;
@@ -28,13 +28,13 @@ app.controller('IndexController', ['StyleService', function(StyleService){
   ic.showView = false;
 
   ic.fadeViewIn = function(){
-    console.log('Faded in');
+    // console.log('Faded in');
     ic.class = 'fadedIn';
     ic.showView = true;
   };
 
   ic.fadeViewOut = function(){
-    console.log('Faded out');
+    // console.log('Faded out');
     ic.class = 'fadedOut';
     ic.showView = false;
   };
@@ -42,9 +42,9 @@ app.controller('IndexController', ['StyleService', function(StyleService){
   StyleService.getStyles();
 }]);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Home Controller
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.controller('HomeController', ['NewsService','NgMap', 'LocationService', 'TransitService', 'WeatherService', 'CalendarService', '$http', function(NewsService,NgMap, LocationService, TransitService, WeatherService, CalendarService, $http){
   console.log('home controller loaded');
@@ -78,7 +78,7 @@ app.controller('HomeController', ['NewsService','NgMap', 'LocationService', 'Tra
 
   hc.getDepartureInfo = function(){
     if(hc.selectedDepartureStop){
-      TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop, hc.selectedDepartureStop.value);
+      TransitService.getDepartureInfo(hc.selectedDepartureStop.route, hc.selectedDepartureStop, hc.selectedDepartureStop);
     }
   };
 
@@ -132,9 +132,9 @@ app.controller('HomeController', ['NewsService','NgMap', 'LocationService', 'Tra
 
 }]);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Settings Controller
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.controller('SettingsController', ['StyleService', 'LocationService', 'TransitService', function(StyleService, LocationService, TransitService){
   console.log('settings controller loaded');
@@ -154,6 +154,7 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
 
   // styles
   sc.selectedStyle = {};
+  sc.apodInfo = StyleService.apodInfo;
 
   // location
   sc.currentLocation = LocationService.location;
@@ -217,9 +218,9 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
   LocationService.getLocation();
 }]);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Transit Service
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
   var routes = [];
@@ -291,7 +292,7 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
 
   var getDepartureInfo = function(routeID, directionID, stopID){
     console.log('Getting departure info for:', routeID, directionID, stopID);
-    $http.get('/transit/departure/' + routeID + '/' + directionID.direction + '/' + stopID).then(function(response){
+    $http.get('/transit/departure/' + routeID + '/' + directionID.direction + '/' + stopID.value).then(function(response){
       console.log('Got departure info:', response.data);
       angular.copy(response.data, departures);
 
@@ -325,6 +326,25 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
 
       // google maps
       NgMap.getMap({id: 'map'}).then(function(map){
+
+        // google transit directions
+        // var directionsService = new google.maps.DirectionsService;
+        // var directionsDisplay = new google.maps.DirectionsRenderer;
+        // directionsDisplay.setMap(map);
+        // directionsService.route({
+        //   origin: '225 Oak Grove Street Minneapolis, MN 55403',
+        //   destination: stopID.value + ', Minneapolis, MN',
+        //   travelMode: google.maps.TravelMode.WALKING
+        // }, function(response, status){
+        //   if (status === google.maps.DirectionsStatus.OK) {
+        //     console.log('got WALKING DURATION:', response.routes[0].legs[0].duration);
+        //     directionsDisplay.setDirections(response);
+        //   } else {
+        //     console.log('Directions request failed due to ' + status);
+        //   }
+        // });
+
+
         busMarkerPosition.lat = departures[0].lat;
         busMarkerPosition.lng = departures[0].lng;
         console.log('busMarkerPosition', busMarkerPosition);
@@ -367,9 +387,9 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
   }
 }]);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Calendar Service
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.factory('CalendarService', ['$http', function($http){
   var events = [];
@@ -404,9 +424,9 @@ app.factory('CalendarService', ['$http', function($http){
   }
 }]);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Weather Service
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.factory('WeatherService', ['$http', function($http){
   var hourly = [];
@@ -427,9 +447,9 @@ app.factory('WeatherService', ['$http', function($http){
   }
 }]);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Location Service
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.factory('LocationService', ['NgMap', '$http', function(NgMap, $http){
   var locationResponseStatus = 0;
@@ -475,13 +495,14 @@ app.factory('LocationService', ['NgMap', '$http', function(NgMap, $http){
   }
 }]);
 
-/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    Style Service (includes Astronomy picture of the day)
-/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.factory('StyleService', ['$http', function($http){
   var apod = {};
   var savedStyles = {};
+  var apodInfo = {};
 
   var getAPOD = function(){
     $http.get('/style/apod').then(function(response){
@@ -492,7 +513,11 @@ app.factory('StyleService', ['$http', function($http){
 
   var saveStyles = function(styles){
     $http.put('/style/save', styles).then(function(response){
-      console.log('Styles posted successfully.');
+      console.log('Styles posted successfully.', response.data);
+      // angular.copy(response.data.title, apodInfo.title);
+      // angular.copy(response.data.explanation, apodInfo.explanation);
+      // apodInfo.title = response.data.title;
+      // apodInfo.explanation = response.data.explanation;
       getStyles();
     });
   };
@@ -509,13 +534,14 @@ app.factory('StyleService', ['$http', function($http){
     getAPOD: getAPOD,
     saveStyles: saveStyles,
     getStyles: getStyles,
-    savedStyles: savedStyles
+    savedStyles: savedStyles,
+    apodInfo: apodInfo
   }
 }]);
 
-/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    News Service
-/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.factory('NewsService', ['$http', function($http){
   var articleList = [];

@@ -330,6 +330,11 @@ form{
   margin-left: 10px;
 }
 
+.apodInfo{
+  height:60px;
+  overflow:scroll;
+}
+
 #apodCheckboxLabel{
   font-size:20px;
   margin-left: 15px;

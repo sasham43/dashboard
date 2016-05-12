@@ -22,7 +22,7 @@ router.get('/', function(req, res){
       locationObject = location[0];
       state = locationObject.state;
       city = locationObject.city;
-      var weatherQuery = 'http://api.wunderground.com/api/945023da3da01614/astronomy/conditions/hourly/q/' + state + '/' + city + '.json';
+      var weatherQuery = 'http://api.wunderground.com/api/945023da3da01614/forecast/astronomy/conditions/hourly/q/' + state + '/' + city + '.json';
       console.log('weatherQuery:', weatherQuery);
       request(weatherQuery, function(err, response, body){
         if (err){
@@ -32,6 +32,10 @@ router.get('/', function(req, res){
           console.log('Got weather data successfully.');
           // parse string to a javascript object
           jsBody = JSON.parse(body);
+
+          // forecast
+          var forecast = jsBody.forecast;
+
           // current conditions
           conditionObject.temp = jsBody.current_observation.feelslike_f;
           conditionObject.conditions = jsBody.current_observation.weather;
@@ -62,7 +66,7 @@ router.get('/', function(req, res){
           conditionObject.high = Math.max.apply(null,tempArray);
           conditionObject.low = Math.min.apply(null,tempArray);
           conditionObject.iconURL = weather.assignIconURL(conditionObject.dayOrNight, conditionObject.conditions);
-          weather.assignAttire(conditionObject, hourlyList);
+          weather.assignAttire(conditionObject, hourlyList, forecast);
 
           var responseObject = {conditionObject, hourlyList};
 

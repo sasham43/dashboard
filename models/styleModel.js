@@ -5,7 +5,9 @@ var styleSchema = new Schema({
   background: String,
   borderColor: String,
   color: String,
-  useAPOD: Boolean
+  useAPOD: Boolean,
+  title: String,
+  explanation: String
 });
 
 var Style = mongoose.model('Style', styleSchema);

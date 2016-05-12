@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-sm-12 styleSettings">
     <div class="col-sm-6">
-      <h2>Current Styles</h2>
+      <h3>Current Styles</h3>
       <div class="row exampleStyleContainer">
         <div class="col-sm-9">
           Border Color:
@@ -30,6 +30,9 @@
             <div class="exampleStyle" colorpicker ng-model="sc.selectedStyle.background" ng-style="{background: ic.selectedStyle.background}"></div>
         </div>
       </div>
+      <p class="apodInfo" >
+        {{ic.selectedStyle.title}}: {{ic.selectedStyle.explanation}}
+      </p>
     </div>
 
     <div class="col-sm-6">
@@ -50,7 +53,7 @@
 <div class="row">
   <div class="col-sm-12 locationSettings">
     <div class="col-sm-6 currentLocation">
-      <h2>Current Location</h2>
+      <h3>Current Location</h3>
       <p>
         {{sc.currentLocation.address}}
       </p>

@@ -1,4 +1,4 @@
-function assignAttire(conditionObject, hourly){
+function assignAttire(conditionObject, hourly, forecast){
   conditionObject.umbrella = false;
   conditionObject.shorts = false;
   conditionObject.pants = false;
@@ -7,14 +7,18 @@ function assignAttire(conditionObject, hourly){
   conditionObject.tshirt = false;
 
   // umbrella
-  hourly.map(function(hour){
-    if(hour.condition.toLowerCase().includes('rain')){
-      conditionObject.umbrella = true;
-    }
-    if(conditionObject.conditions.toLowerCase().includes('rain')){
-      conditionObject.umbrella = true;
-    }
-  });
+  // hourly.map(function(hour){
+  //   if(hour.condition.toLowerCase().includes('rain')){
+  //     conditionObject.umbrella = true;
+  //   }
+  //   if(conditionObject.conditions.toLowerCase().includes('rain')){
+  //     conditionObject.umbrella = true;
+  //   }
+  // });
+  var chancePrecip = forecast.simpleforecast.forecastday[0].qpf_day.in;
+  if(chancePrecip > 0.1){
+    conditionObject.umbrella = true;
+  }
 
   // mittens
   if(conditionObject.temp <= 40){
@@ -72,6 +76,9 @@ function assignIconURL(dayOrNight, condition){
       case 'Chance of Thunderstorm':
         iconURL += 'simple_weather_icon_37.png';
         break;
+      case 'Chance of a Thunderstorm':
+        iconURL += 'simple_weather_icon_37.png';
+        break;
       case 'Clear':
         iconURL += 'simple_weather_icon_02.png';
         break;
@@ -123,7 +130,7 @@ function assignIconURL(dayOrNight, condition){
       case 'Chance of Snow':
         iconURL += 'simple_weather_icon_15.png';
         break;
-      case 'Chance of Thunderstorm':
+      case 'Chance of a Thunderstorm':
         iconURL += 'simple_weather_icon_17.png';
         break;
       case 'Clear':

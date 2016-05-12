@@ -7,48 +7,6 @@ router.put('/save', function(req, res){
   var styleObject = req.body;
   console.log('Entered style update route', styleObject);
 
-  // if(styleObject.useAPOD && styleObject.apodDate){
-  //   var apodDay = moment(styleObject.apodDate).format('YYYY-MM-DD');
-  //   request('https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR&date=' + apodDay, function(err, response, body){
-  //     if (err){
-  //       console.log('Error getting APOD:', err);
-  //       res.sendStatus(500);
-  //     } else {
-  //       console.log('Got APOD:', response);
-  //       var jsBody = JSON.parse(body);
-  //       styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
-  //       updateStyle(res, styleObject);
-  //     }
-  //   });
-  // } else if(styleObject.useAPOD){
-  //   request('https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR', function(err, response, body){
-  //     if (err){
-  //       console.log('Error getting APOD:', err);
-  //       res.sendStatus(500);
-  //     } else {
-  //       console.log('Got APOD:', response);
-  //       var jsBody = JSON.parse(body);
-  //       if(!jsBody.url.includes('youtube.com')){
-  //         styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
-  //       } else {
-  //         var yesterday = moment().add(-1, 'day').format('YYYY-MM-DD');
-  //         request('https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR&date=' + yesterday, function(err, response, body){
-  //           if (err){
-  //             console.log('Error getting APOD:', err);
-  //             res.sendStatus(500);
-  //           } else {
-  //             console.log('Got APOD:', response);
-  //             var jsBody = JSON.parse(body);
-  //             styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
-  //           }
-  //         });
-  //       }
-  //       updateStyle(res, styleObject);
-  //     }
-  //   });
-  // } else {
-  //   updateStyle(res, styleObject);
-  // }
   getAPOD(res, styleObject, styleObject.apodDate);
 });
 
@@ -76,6 +34,12 @@ var updateStyle = function(res, styles){
   if(styles.background){
     applicableFields.$set.background = styles.background;
   }
+  if(styles.title){
+    applicableFields.$set.title = styles.title;
+  }
+  if(styles.explanation){
+    applicableFields.$set.explanation = styles.explanation;
+  }
 
   Style.findOneAndUpdate({}, applicableFields, function(err, style){
     if(err){
@@ -83,14 +47,16 @@ var updateStyle = function(res, styles){
       res.sendStatus(500);
     } else {
       console.log('Updated styles.');
-      console.log('style res:', res);
+      // console.log('style res:', res);
       res.sendStatus(200);
     }
   });
 };
 
 var getAPOD = function(res, styleObject, apodDate){
-  var apodBaseURL = 'https://api.nasa.gov/planetary/apod?api_key=vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR';
+  var apodKey = 'vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR';
+  var apodInfo = {};
+  var apodBaseURL = 'https://api.nasa.gov/planetary/apod?hd=true&api_key=' + apodKey;
   if(apodDate){
     var formattedDate = moment(apodDate).format('YYYY-MM-DD');
     request(apodBaseURL + '&date=' + formattedDate, function(err, response, body){
@@ -103,8 +69,10 @@ var getAPOD = function(res, styleObject, apodDate){
           var previousDay = moment(apodDate).add(-1, 'day');
           getAPOD(res, styleObject, previousDay);
         } else {
-          styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
-          updateStyle(res, styleObject);
+          styleObject.background = 'url(\'' + jsBody.hdurl + '\') center/cover no-repeat';
+          styleObject.title = jsBody.title;
+          styleObject.explanation = jsBody.explanation;
+          updateStyle(res, styleObject, apodInfo);
         }
       }
 
@@ -120,8 +88,10 @@ var getAPOD = function(res, styleObject, apodDate){
           var previousDay = moment().add(-1, 'day');
           getAPOD(res, styleObject, previousDay);
         } else {
-          styleObject.background = 'url(\'' + jsBody.url + '\') center/cover no-repeat';
-          updateStyle(res, styleObject);
+          styleObject.background = 'url(\'' + jsBody.hdurl + '\') center/cover no-repeat';
+          styleObject.title = jsBody.title;
+          styleObject.explanation = jsBody.explanation;
+          updateStyle(res, styleObject, apodInfo);
         }
       }
 
