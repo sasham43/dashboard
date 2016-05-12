@@ -64,6 +64,7 @@ body{
   border: solid 1px;
   top: 0;
   left: -40px;
+  border-color:inherit;
 }
 
 .settingsButton{
@@ -72,6 +73,7 @@ body{
   border: solid 1px;
   top: 0;
   right: -40px;
+  border-color: inherit;
 }
 
 .settingsButton:hover{
@@ -95,10 +97,12 @@ body{
   border: solid 1px;
   top: 0;
   right: -40px;
+  border-color: inherit;
 }
 
 .routeLink{
   color:inherit;
+  border-color:inherit;
 }
 
 /*Widget Structure*/
@@ -116,18 +120,6 @@ body{
   padding: 10px;
   -webkit-mask-image: -webkit-gradient(linear, left 80%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }
-
-/*.calendar:after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 87%;
-  height: 20%;
-  left: 15px;
-  bottom: 0;
-  background: -webkit-linear-gradient(transparent, #FFF) left repeat;
-  background: linear-gradient(transparent, #FFF) left repeat;
-}*/
 
 .weather{
   background-color: rgba(30, 30, 30, 0.5);
@@ -330,8 +322,17 @@ form{
   font-size: 25px;
 }
 
+.datePicker{
+  background: rgba(0,0,0,0);
+}
+
+.apodDateLabel{
+  margin-left: 10px;
+}
+
 #apodCheckboxLabel{
   font-size:20px;
+  margin-left: 15px;
 }
 
 #saveStyles{
@@ -442,7 +443,7 @@ form{
 
 /*Animations*/
 
-.fadedIn{
+/*.fadedIn{
   transition: 1s ease-in-out all;
   opacity: 1;
 }
@@ -450,11 +451,24 @@ form{
   transition: 1s ease-in-out all;
   position:absolute;
   opacity: 0;
-}
+}*/
 
 .main.ng-hide{
   opacity: 0;
 }
+
+@keyframes fadeOut {
+  from {opacity: 1}
+  to {opacity:0}
+}
+
+@keyframes fadeIn {
+  from {opacity:0}
+  to {opacity:1}
+}
+
+.ng-enter  { animation: fadeIn 1.5s both ease-in; z-index: 8888; animation-delay: 0.5s }
+.ng-leave  { animation: fadeOut 0.5s both ease-in; z-index: 9999; }
 
 /*News*/
 

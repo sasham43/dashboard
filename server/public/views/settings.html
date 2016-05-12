@@ -37,7 +37,9 @@
         <input class="form-control textInput" type="text" placeholder="border color" ng-model="sc.selectedStyle.borderColor"/>
         <input class="form-control textInput" type="text" placeholder="text color" ng-model="sc.selectedStyle.color"/>
         <input class="form-control textInput" type="text" placeholder="background color" ng-model="sc.selectedStyle.background"/>
-        <input class="form-inline" type="checkbox" id="apodCheckbox" ng-model="sc.selectedStyle.useAPOD"/><label id="apodCheckboxLabel" for="apodCheckbox">Use Astronomy Picture of the Day</label>
+        <input class="form-inline" type="checkbox" id="apodCheckbox" ng-model="sc.selectedStyle.useAPOD"/><label id="apodCheckboxLabel" for="apodCheckbox">Use Astronomy Picture of the Day</label><br />
+        <input class="datePicker form-inline" type="date" ng-show="sc.selectedStyle.useAPOD" ng-model="sc.selectedStyle.apodDate"/><label class="apodDateLabel" ng-show="sc.selectedStyle.useAPOD" >Use a previous day's image</label>
+
         <button id="saveStyles" type="submit" class="btn btn-success form-control" ng-click="sc.saveStyles()">Save</button>
         <button id="cancelStyles" class="btn btn-danger form-control" ng-click="sc.cancelSaveStyles()">Cancel</button>
       </form>

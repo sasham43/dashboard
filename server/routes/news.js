@@ -31,7 +31,6 @@ router.get('/viewed', function(req, res){
 
 module.exports = router;
 
-
 // top stories stuff
 // var url = "https://api.nytimes.com/svc/topstories/v2/home.json";
 // url += '?' + $.param({

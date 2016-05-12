@@ -57,6 +57,9 @@ function assignIconURL(dayOrNight, condition){
       case 'Chance of Flurries':
         iconURL += 'simple_weather_icon_34.png';
         break;
+      case 'Fog':
+        iconURL += 'simple_weather_icon_10.png';
+        break;
       case 'Chance of Rain':
         iconURL += 'simple_weather_icon_31.png';
         break;
@@ -107,6 +110,9 @@ function assignIconURL(dayOrNight, condition){
     switch(condition){
       case 'Chance of Flurries':
         iconURL += 'simple_weather_icon_14.png';
+        break;
+      case 'Fog':
+        iconURL += 'simple_weather_icon_10.png';
         break;
       case 'Chance of Rain':
         iconURL += 'simple_weather_icon_11.png';
