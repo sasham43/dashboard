@@ -481,6 +481,8 @@ form{
 .ng-leave  { animation: fadeOut 0.5s both ease-in; z-index: 9999; }
 .main.ng-show  { animation: fadeIn 0.5s both ease-in; z-index: 8888; animation-delay: 0.5s }
 .main.ng-hide  { animation: fadeOut 1.0s both ease-in; z-index: 9999; }
+.newsSlider { animation: fadeIn 0.3s both ease-in; z-index: 8888; animation-delay: 0.6s }
+.newsSlider.ng-hide  { animation: fadeOut 0.5s both ease-in; z-index: 9999; }
 
 /*News*/
 
