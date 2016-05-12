@@ -458,9 +458,9 @@ form{
   opacity: 0;
 }*/
 
-.main.ng-hide{
+/*.main.ng-hide{
   opacity: 0;
-}
+}*/
 
 @keyframes fadeOut {
   from {opacity: 1}
@@ -474,6 +474,8 @@ form{
 
 .ng-enter  { animation: fadeIn 1.5s both ease-in; z-index: 8888; animation-delay: 0.5s }
 .ng-leave  { animation: fadeOut 0.5s both ease-in; z-index: 9999; }
+.main.ng-show  { animation: fadeIn 0.5s both ease-in; z-index: 8888; animation-delay: 0.5s }
+.main.ng-hide  { animation: fadeOut 1.0s both ease-in; z-index: 9999; }
 
 /*News*/
 
