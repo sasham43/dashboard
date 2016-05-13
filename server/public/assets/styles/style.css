@@ -8,26 +8,30 @@ body{
 }
 
 
-
 .textInput{
   background: rgba(0,0,0,0);
   color: inherit;
+  border-color:inherit;
 }
 
 #stopSelect{
   color: inherit;
+  border-color:inherit;
   background-color: rgba(0,0,0,0);
 }
 #removeStopSelect{
   color: inherit;
+  border-color:inherit;
   background-color: rgba(0,0,0,0);
 }
 #addStopSelect{
   color: inherit;
+  border-color:inherit;
   background-color: rgba(0,0,0,0);
 }
 #addRouteSelect{
   color: inherit;
+  border-color:inherit;
   background-color: rgba(0,0,0,0);
 }
 
@@ -445,7 +449,7 @@ form{
   background: rgba(0, 0, 0, 0);
 }
 
-#remoteStop:focus{
+#removeStop:focus{
   background: #a86a10;
   color: white;
   outline: none;
@@ -481,8 +485,8 @@ form{
 .ng-leave  { animation: fadeOut 0.5s both ease-in; z-index: 9999; }
 .main.ng-show  { animation: fadeIn 0.5s both ease-in; z-index: 8888; animation-delay: 0.5s }
 .main.ng-hide  { animation: fadeOut 1.0s both ease-in; z-index: 9999; }
-.newsSlider { animation: fadeIn 0.3s both ease-in; z-index: 8888; animation-delay: 0.6s }
-.newsSlider.ng-hide  { animation: fadeOut 0.5s both ease-in; z-index: 9999; }
+.newsSlider { animation: fadeIn 0.3s both ease-in; z-index: 8888; animation-delay: 0.2s }
+.newsSlider.ng-hide  { animation: fadeOut 0.1s both ease-in; z-index: 9999; }
 
 /*News*/
 
@@ -505,12 +509,19 @@ form{
   color: inherit;
 }
 
+.carousel-indicators{
+  color:inherit;
+  border-color:inherit;
+}
+
 #rightSlide{
   right: 15px;
   top: 16px;
+  color:inherit;
 }
 
 #leftSlide{
   left: 15px;
   top: 16px;
+  color:inherit;
 }

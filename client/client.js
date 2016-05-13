@@ -277,6 +277,7 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
     }, function(response){
       console.log('Stop not saved.', response.status);
       createStopResponse.value = response.status;
+      getAllSavedStops();
     });
   };
 
