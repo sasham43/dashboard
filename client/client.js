@@ -154,7 +154,6 @@ app.controller('SettingsController', ['StyleService', 'LocationService', 'Transi
 
   // styles
   sc.selectedStyle = {};
-  sc.apodInfo = StyleService.apodInfo;
 
   // location
   sc.currentLocation = LocationService.location;
@@ -328,19 +327,20 @@ app.factory('TransitService', ['NgMap', '$http', function(NgMap, $http){
       // google maps
       NgMap.getMap({id: 'map'}).then(function(map){
 
-        // google transit directions
+        //google transit directions
         // var directionsService = new google.maps.DirectionsService;
         // var directionsDisplay = new google.maps.DirectionsRenderer;
         // directionsDisplay.setMap(map);
         // directionsService.route({
         //   origin: '225 Oak Grove Street Minneapolis, MN 55403',
         //   destination: stopID.value + ', Minneapolis, MN',
-        //   travelMode: google.maps.TravelMode.WALKING
+        //   travelMode: google.maps.TravelMode.TRANSIT
         // }, function(response, status){
         //   if (status === google.maps.DirectionsStatus.OK) {
-        //     console.log('got WALKING DURATION:', response.routes[0].legs[0].duration);
+        //     console.log('got TRANSIT:', response);
         //     directionsDisplay.setDirections(response);
         //   } else {
+        //     // console.log('Directions resposne:')
         //     console.log('Directions request failed due to ' + status);
         //   }
         // });
@@ -503,7 +503,6 @@ app.factory('LocationService', ['NgMap', '$http', function(NgMap, $http){
 app.factory('StyleService', ['$http', function($http){
   var apod = {};
   var savedStyles = {};
-  var apodInfo = {};
 
   var getAPOD = function(){
     $http.get('/style/apod').then(function(response){
@@ -515,10 +514,6 @@ app.factory('StyleService', ['$http', function($http){
   var saveStyles = function(styles){
     $http.put('/style/save', styles).then(function(response){
       console.log('Styles posted successfully.', response.data);
-      // angular.copy(response.data.title, apodInfo.title);
-      // angular.copy(response.data.explanation, apodInfo.explanation);
-      // apodInfo.title = response.data.title;
-      // apodInfo.explanation = response.data.explanation;
       getStyles();
     });
   };
@@ -527,6 +522,9 @@ app.factory('StyleService', ['$http', function($http){
     $http.get('/style/all').then(function(response){
       console.log('Got styles:', response);
       angular.copy(response.data, savedStyles);
+      // if(savedStyles.useAPOD){
+      //   savedStyles.background = 'url(\'../assets/images/apod/' + savedStyles.imageName + '\') center/cover no-repeat';
+      // }
     });
   };
 
@@ -535,8 +533,7 @@ app.factory('StyleService', ['$http', function($http){
     getAPOD: getAPOD,
     saveStyles: saveStyles,
     getStyles: getStyles,
-    savedStyles: savedStyles,
-    apodInfo: apodInfo
+    savedStyles: savedStyles
   }
 }]);
 
