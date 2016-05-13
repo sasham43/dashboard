@@ -18,7 +18,7 @@ router.get('/all', function(req, res){
       console.log('Error finding styles:', err);
       res.sendStatus(500);
     } else {
-      console.log('Found styles:', styles);
+      // console.log('Found styles:', styles);
       res.send(styles[0]);
     }
   });
@@ -59,7 +59,7 @@ var updateStyle = function(res, styles){
 };
 
 var getAPOD = function(res, styleObject, apodDate){
-  var apodKey = 'vRkyBLgP6BandXIDG4D5Fr0Ppub3dUBToDPyotMR';
+  var apodKey = process.env.apodKey;
   var apodBaseURL = 'https://api.nasa.gov/planetary/apod?hd=true&api_key=' + apodKey;
   if(styleObject.useAPOD && apodDate){
     var formattedDate = moment(apodDate).format('YYYY-MM-DD');

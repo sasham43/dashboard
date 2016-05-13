@@ -22,8 +22,10 @@ router.get('/', function(req, res){
       locationObject = location[0];
       state = locationObject.state;
       city = locationObject.city;
-      var weatherQuery = 'http://api.wunderground.com/api/945023da3da01614/forecast/astronomy/conditions/hourly/q/' + state + '/' + city + '.json';
-      console.log('weatherQuery:', weatherQuery);
+      var weatherKey = process.env.weatherKey;
+      // console.log('weatherKey', weatherKey);
+      var weatherQuery = 'http://api.wunderground.com/api/' + weatherKey + '/forecast/astronomy/conditions/hourly/q/' + state + '/' + city + '.json';
+      // console.log('weatherQuery:', weatherQuery);
       request(weatherQuery, function(err, response, body){
         if (err){
           console.log('Error getting weather data from Weather Underground:', err);
