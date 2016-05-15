@@ -226,6 +226,7 @@ form{
 
 .conditionIcon{
   width: 100px;
+  -webkit-mask-image: -webkit-gradient(linear, left center, right center, from(rgba(0,255,0,1)), to(rgba(0,255,0,1)));
 }
 
 .hourlyIcon{
@@ -259,10 +260,12 @@ form{
 
 .mapContainer{
   height: 300px;
+  position:absolute;
+  bottom:0;
 }
 
 #map{
-  position: absolute;
+  /*position: absolute;*/
   width: 271px;
   bottom: 0;
 }
@@ -483,10 +486,16 @@ form{
 
 .ng-enter  { animation: fadeIn 1.5s both ease-in; z-index: 8888; animation-delay: 0.5s }
 .ng-leave  { animation: fadeOut 0.5s both ease-in; z-index: 9999; }
+
 .main.ng-show  { animation: fadeIn 0.5s both ease-in; z-index: 8888; animation-delay: 0.5s }
 .main.ng-hide  { animation: fadeOut 1.0s both ease-in; z-index: 9999; }
-.newsSlider { animation: fadeIn 0.3s both ease-in; z-index: 8888; animation-delay: 0.2s }
-.newsSlider.ng-hide  { animation: fadeOut 0.1s both ease-in; z-index: 9999; }
+
+.newsSlider { animation: fadeIn 0.3s both ease-in; z-index: 8888; animation-delay: 0.4s }
+.newsSlider.ng-hide  { animation: fadeOut 0.1s both ease-in; z-index: 9999; animation-delay: 0.0s}
+
+
+
+
 
 /*News*/
 
