@@ -22,7 +22,8 @@ app.use(bodyParser.json());
 app.use(express.static('server/public'));
 
 // database
-var mongoURI = 'mongodb://localhost/dashboard';
+// var mongoURI = 'mongodb://localhost/dashboard';
+var mongoURI = 'ds023442.mlab.com:23442';
 var mongoDB = mongoose.connect(mongoURI).connection;
 
 mongoDB.on('error', function(err){
@@ -44,7 +45,7 @@ app.use('/', index);
 
 
 // server
-var server = app.listen(3000, function(){
+var server = app.listen(3000 || process.env.PORT, function(){
   var port = server.address().port;
   console.log('Server is listening on port ' + port + '...\nPress Ctrl + c to quit');
 });
