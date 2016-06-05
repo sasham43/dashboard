@@ -23,7 +23,9 @@ app.use(express.static('server/public'));
 
 // database
 // var mongoURI = 'mongodb://localhost/dashboard';
-var mongoURI = 'ds023442.mlab.com:23442';
+var mLabUser = process.env.mLabUser;
+var mLabPass = process.env.mLabPass;
+var mongoURI = 'ds023442.mlab.com:23442 -u ' + mLabUser + ' -p ' + mLabPass;
 var mongoDB = mongoose.connect(mongoURI).connection;
 
 mongoDB.on('error', function(err){
