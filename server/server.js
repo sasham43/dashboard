@@ -45,7 +45,7 @@ app.use('/', index);
 
 
 // server
-var server = app.listen(3000 || process.env.PORT, function(){
+var server = app.listen( process.env.PORT, function(){
   var port = server.address().port;
   console.log('Server is listening on port ' + port + '...\nPress Ctrl + c to quit');
 });
