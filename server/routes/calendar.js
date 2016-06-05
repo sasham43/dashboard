@@ -1,9 +1,9 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 
-var google = require('googleapis');
+// var google = require('googleapis');
 var moment = require('moment');
-var key = require('../../dashboard_private_key.json');
+// var key = require('../../dashboard_private_key.json');
 var Event = require('../../models/calendarModel');
 // var key = {
 //   "type": process.env.type,
