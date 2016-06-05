@@ -73,7 +73,7 @@ var getAPOD = function(res, styleObject, apodDate){
           var previousDay = moment(apodDate).add(-1, 'day');
           getAPOD(res, styleObject, previousDay);
         } else {
-          saveAPOD(jsBody.hdurl, styleObject);
+          // saveAPOD(jsBody.hdurl, styleObject);
           styleObject.background = 'url(\'' + jsBody.hdurl + '\') center/cover no-repeat';
           styleObject.title = jsBody.title;
           styleObject.explanation = jsBody.explanation;
@@ -93,7 +93,7 @@ var getAPOD = function(res, styleObject, apodDate){
           var previousDay = moment().add(-1, 'day');
           getAPOD(res, styleObject, previousDay);
         } else {
-          saveAPOD(jsBody.hdurl, styleObject);
+          // saveAPOD(jsBody.hdurl, styleObject);
           styleObject.background = 'url(\'' + jsBody.hdurl + '\') center/cover no-repeat';
           styleObject.title = jsBody.title;
           styleObject.explanation = jsBody.explanation;
