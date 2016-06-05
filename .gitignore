@@ -4,7 +4,7 @@ modules/client_secret.json
 dashboard_private_key.json
 server/routes/calendar-old.js
 modules/googleCalendar.js
-stops.csv
+
 server/public/assets/images/apod
 .env
 npm-debug.log
