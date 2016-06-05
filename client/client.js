@@ -415,6 +415,7 @@ app.factory('CalendarService', ['$http', function($http){
         }
         tempEvents.push({title: event.title, dateStart: dateStart, start: tempStart, end: tempEnd, timeStart: tempTimeStart, timeEnd: tempTimeEnd, isToday: isToday});
       });
+      console.log('Temp Events:', tempEvents);
       angular.copy(tempEvents, events);
     });
   }

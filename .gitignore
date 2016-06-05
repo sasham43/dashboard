@@ -7,3 +7,4 @@ modules/googleCalendar.js
 stops.csv
 server/public/assets/images/apod
 .env
+npm-debug.log
