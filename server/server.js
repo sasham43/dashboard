@@ -1,5 +1,5 @@
 // node modules
-// require('dotenv').config();
+require('dotenv').config();
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -22,10 +22,10 @@ app.use(bodyParser.json());
 app.use(express.static('server/public'));
 
 // database
-// var mongoURI = 'mongodb://localhost/dashboard';
+var mongoURI = 'mongodb://localhost/dashboard';
 var mLabUser = process.env.mLabUser;
 var mLabPass = process.env.mLabPass;
-var mongoURI = 'mongodb://' + mLabUser + ':' + mLabPass + '@ds023442.mlab.com:23442/heroku_fqs1jdd6';
+// var mongoURI = 'mongodb://' + mLabUser + ':' + mLabPass + '@ds023442.mlab.com:23442/heroku_fqs1jdd6';
 
 var mongoDB = mongoose.connect(mongoURI).connection;
 
@@ -48,7 +48,7 @@ app.use('/', index);
 
 
 // server
-var server = app.listen( process.env.PORT, function(){
+var server = app.listen( 3001, function(){
   var port = server.address().port;
   console.log('Server is listening on port ' + port + '...\nPress Ctrl + c to quit');
 });

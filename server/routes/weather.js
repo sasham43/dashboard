@@ -31,7 +31,7 @@ router.get('/', function(req, res){
           console.log('Error getting weather data from Weather Underground:', err);
           res.sendStatus(500);
         } else {
-          console.log('Got weather data successfully.');
+          console.log('Got weather data successfully.', body);
           // parse string to a javascript object
           jsBody = JSON.parse(body);
 
