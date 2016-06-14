@@ -25,16 +25,16 @@ app.controller('IndexController', ['StyleService', function(StyleService){
 
   ic.selectedStyle = StyleService.savedStyles;
 
-  ic.showView = false;
+  ic.showView = true;
 
   ic.fadeViewIn = function(){
-    // console.log('Faded in');
+    console.log('Faded in');
     ic.class = 'fadedIn';
     ic.showView = true;
   };
 
   ic.fadeViewOut = function(){
-    // console.log('Faded out');
+    console.log('Faded out');
     ic.class = 'fadedOut';
     ic.showView = false;
   };
