@@ -5,6 +5,12 @@ body{
   background-size: cover;
   height:100vh;
   font-family: Open-Sans, Helvetica, sans-serif;
+  width:95vw;
+}
+
+a{
+  color:inherit;
+  text-decoration:inherit;
 }
 
 
@@ -139,7 +145,7 @@ body{
 .news{
   margin-top: 15px;
   background-color: rgba(30, 30, 30, 0.5);
-  height: 277px;
+  height: 150px;
 }
 
 /*Forms*/
@@ -500,11 +506,11 @@ form{
 /*News*/
 
 .news{
-  padding: 20px;
+  padding: 5px;
 }
 
 .carousel-control{
-  height: 277px;
+  height: 150px;
 }
 
 .articleAbstract, .articleTitle{

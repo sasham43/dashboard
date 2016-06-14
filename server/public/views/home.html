@@ -108,10 +108,10 @@
   <div class="col-sm-12">
     <div class="news">
       <div class="newsSlider text-center" ng-repeat="article in hc.articleList" ng-hide="!hc.isCurrentIndex($index)">
-        <h2 class="articleTitle">{{article.title}}</h2>
-        <p class="articleAbstract">
-          <a ng-href="{{article.url}}" target="_blank">{{article.abstract}}</a>
-        </p>
+        <a ng-href="{{article.url}}" target="_blank"><h2 class="articleTitle">{{article.title}}</h2></a>
+        <!-- <p class="articleAbstract">
+          {{article.abstract}}
+        </p> -->
       </div>
 
       <div class="wrapper">
