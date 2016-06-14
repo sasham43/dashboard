@@ -69,7 +69,7 @@ var getAPOD = function(res, styleObject, apodDate){
       } else {
         console.log('Got APOD.');
         var jsBody = JSON.parse(body);
-        if(jsBody.url.includes('youtube.com')){
+        if(jsBody.url.indexOf('youtube.com') !== -1){
           var previousDay = moment(apodDate).add(-1, 'day');
           getAPOD(res, styleObject, previousDay);
         } else {
@@ -89,7 +89,7 @@ var getAPOD = function(res, styleObject, apodDate){
       } else {
         console.log('Got APOD.');
         var jsBody = JSON.parse(body);
-        if(jsBody.url.includes('youtube.com')){
+        if(jsBody.url.indexOf('youtube.com') !== -1){
           var previousDay = moment().add(-1, 'day');
           getAPOD(res, styleObject, previousDay);
         } else {
