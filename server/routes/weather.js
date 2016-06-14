@@ -70,7 +70,7 @@ router.get('/', function(req, res){
           conditionObject.iconURL = weather.assignIconURL(conditionObject.dayOrNight, conditionObject.conditions);
           weather.assignAttire(conditionObject, hourlyList, forecast);
 
-          var responseObject = {conditionObject, hourlyList};
+          var responseObject = {conditionObject: conditionObject, hourlyList: hourlyList};
 
           res.send(responseObject);
         }
