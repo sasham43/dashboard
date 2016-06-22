@@ -1,6 +1,6 @@
 # daily dashboard
 
-# Purpose
+## Purpose
 The purpose of this application was to save me time and keep me focused during my morning routine.  Like many people, I find myself checking my phone when I wake up in the morning to see my calendar, the weather, and a news summary to get a sense of the day.  Unfortunately, I often find myself getting sidetracked by mindless distractions (Facebook, et cetera).  I designed this dashboard to fetch all the information I needed to start my day while presenting a clean modern look that would blend seamlessly into the background when needed.
 
 ## About
